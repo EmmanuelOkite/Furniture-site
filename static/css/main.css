@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Sam Stunning Furniture: main stylesheet
+   Sam's Stunning Furniture: main stylesheet
    --------------------------------------------------------------------------
    1. Design tokens
    2. Base & typography
@@ -1037,7 +1037,7 @@ address {
 }
 
 .brand--light {
-    display: inline-block;
+    display: inline-flex;
     margin-bottom: 24px;
     color: var(--ivory);
 }

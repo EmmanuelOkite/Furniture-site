@@ -1,5 +1,5 @@
 /*
- * Sam Stunning Furniture: site interactions
+ * Sam's Stunning Furniture: site interactions
  * - Header turns solid once the page scrolls past the hero.
  * - Mobile menu toggle.
  * - Search panel toggle.

@@ -75,6 +75,6 @@ Not used: ambo-ampeng, inside-weather, sven-brandsma, virender-singh (style or c
 
 1. **Security:** `.env` is tracked in git (the `.gitignore` is inside `furniture_site/`, so it does not apply at the project root). Move `.gitignore` to the project root, untrack `.env`, and rotate any credentials it contained if it was ever pushed.
 2. Remove the non-image files from `furniture_site/images/` (`.exe`, `.docx`, `.crdownload`). Do not commit that folder; the site uses `static/images/`.
-3. Replace the contact and social placeholders in `footer.html` with real details.
+3. ~~Replace the contact and social placeholders in `footer.html`~~ Done (2026-10-12): Instagram, Facebook and TikTok links, Kyanja, Kampala (Google Maps link), and phones 0751 526 014 / 0767 250 127. Brand renamed to "Sam's Stunning Furniture"; logo mark re-extracted from the new `image.png`. The cart button was removed from the navbar. No email address yet.
 4. Add bedroom and outdoor photography.
 5. Once a `Product` model exists, render the featured grid from the database.

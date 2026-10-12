@@ -463,28 +463,6 @@ address {
     stroke-linejoin: round;
 }
 
-.cart-link__count {
-    position: absolute;
-    top: 4px;
-    right: 2px;
-    display: grid;
-    place-items: center;
-    min-width: 18px;
-    height: 18px;
-    padding: 0 5px;
-    border-radius: 9px;
-    background: var(--forest);
-    color: var(--ivory);
-    font-size: .6875rem;
-    font-weight: 500;
-    line-height: 1;
-}
-
-.js .has-hero .site-header:not(.is-solid) .cart-link__count {
-    background: var(--ivory);
-    color: var(--forest-deep);
-}
-
 .menu-toggle,
 .no-js [data-search-toggle] {
     display: none;
@@ -1371,17 +1349,6 @@ address {
 
     .brand__sub {
         letter-spacing: .3em;
-    }
-}
-
-/* Very small phones: the logo mark alone (the link keeps its aria-label). */
-@media (max-width: 340px) {
-    .site-header .brand__name {
-        display: none;
-    }
-
-    .brand__mark {
-        height: 40px;
     }
 }
 

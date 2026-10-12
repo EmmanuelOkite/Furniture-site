@@ -1,0 +1,26 @@
+<nav aria-label="Main navigation">
+    <a href="{% url 'home' %}" class="brand">Sam Stunning Furniture</a>
+
+    <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="#">Shop</a></li>
+        <li><a href="#">Categories</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact</a></li>
+    </ul>
+
+    <form action="#" method="get" role="search">
+        <label for="navbar-search">Search furniture</label>
+        <input type="search" id="navbar-search" name="q" placeholder="Search furniture...">
+        <button type="submit">Search</button>
+    </form>
+
+    <ul>
+        <li><a href="#" aria-label="My account">Account</a></li>
+        <li>
+            <a href="#" aria-label="Shopping cart, 0 items">
+                Cart <span class="cart-count">0</span>
+            </a>
+        </li>
+    </ul>
+</nav>

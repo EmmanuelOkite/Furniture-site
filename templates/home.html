@@ -1,97 +1,239 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}Home | Sam Stunning Furniture{% endblock %}
+{% block title %}Sam Stunning Furniture | Furniture That Feels Like Home{% endblock %}
+
+{% block body_class %}has-hero{% endblock %}
+
+{% block extra_head %}
+<link rel="preload" as="image" href="{% static 'images/hero-living-room.jpg' %}"
+      imagesrcset="{% static 'images/hero-living-room-1200.jpg' %} 1200w, {% static 'images/hero-living-room.jpg' %} 2400w"
+      imagesizes="100vw">
+{% endblock %}
 
 {% block content %}
 
+{# ---------- Hero ---------- #}
 <section class="hero" aria-labelledby="hero-heading">
-    <h1 id="hero-heading">Beautiful Furniture for Every Home</h1>
-    <p>
-        Discover quality sofas, beds, tables, and more, crafted to bring comfort
-        and style to your living space.
-    </p>
-    <a href="#" class="button">Shop Now</a>
-</section>
+    <img class="hero__image"
+         src="{% static 'images/hero-living-room.jpg' %}"
+         srcset="{% static 'images/hero-living-room-1200.jpg' %} 1200w, {% static 'images/hero-living-room.jpg' %} 2400w"
+         sizes="100vw"
+         width="2400" height="2118"
+         alt="A bright living room with a mustard-yellow armchair, a brass floor lamp and warm oak flooring"
+         fetchpriority="high">
+    <div class="hero__shade" aria-hidden="true"></div>
 
-<section class="featured-categories" aria-labelledby="categories-heading">
-    <h2 id="categories-heading">Shop by Category</h2>
-    <ul>
-        <li>
-            <a href="#">
-                <div class="image-placeholder">[Image: Living Room]</div>
-                <h3>Living Room</h3>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <div class="image-placeholder">[Image: Bedroom]</div>
-                <h3>Bedroom</h3>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <div class="image-placeholder">[Image: Dining]</div>
-                <h3>Dining</h3>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <div class="image-placeholder">[Image: Office]</div>
-                <h3>Office</h3>
-            </a>
-        </li>
-    </ul>
-</section>
-
-<section class="featured-products" aria-labelledby="products-heading">
-    <h2 id="products-heading">Featured Products</h2>
-    <div class="product-list">
-        <article class="product-card">
-            <div class="image-placeholder">[Product image]</div>
-            <h3>Product Name 1</h3>
-            <p>Short product description goes here.</p>
-            <p class="price">Price: 0.00</p>
-            <a href="#">View Details</a>
-        </article>
-        <article class="product-card">
-            <div class="image-placeholder">[Product image]</div>
-            <h3>Product Name 2</h3>
-            <p>Short product description goes here.</p>
-            <p class="price">Price: 0.00</p>
-            <a href="#">View Details</a>
-        </article>
-        <article class="product-card">
-            <div class="image-placeholder">[Product image]</div>
-            <h3>Product Name 3</h3>
-            <p>Short product description goes here.</p>
-            <p class="price">Price: 0.00</p>
-            <a href="#">View Details</a>
-        </article>
-        <article class="product-card">
-            <div class="image-placeholder">[Product image]</div>
-            <h3>Product Name 4</h3>
-            <p>Short product description goes here.</p>
-            <p class="price">Price: 0.00</p>
-            <a href="#">View Details</a>
-        </article>
+    <div class="hero__inner container">
+        <div class="hero__content">
+            <p class="eyebrow eyebrow--light">Living &middot; Dining &middot; Bedroom &middot; Office</p>
+            <h1 id="hero-heading" class="hero__title">Make Your Space Feel Like Home.</h1>
+            <p class="hero__text">
+                Discover thoughtfully designed furniture that brings comfort, character,
+                and timeless style into every room.
+            </p>
+            <div class="button-group">
+                <a href="#pieces" class="button button--primary">Explore Collection</a>
+                <a href="#story" class="button button--ghost-light">Discover Our Story</a>
+            </div>
+        </div>
     </div>
 </section>
 
-<section class="about-intro" aria-labelledby="about-heading">
-    <div class="image-placeholder">[Image: Showroom]</div>
-    <h2 id="about-heading">Why Choose Sam Stunning Furniture?</h2>
-    <p>
-        Placeholder text introducing the store: who we are, the quality of our
-        furniture, our craftsmanship, and our commitment to customer service.
-    </p>
-    <a href="#">Learn More About Us</a>
+{# ---------- Categories ---------- #}
+{# Rooms are not stored in the database yet; links point to "#" until a category page exists. #}
+<section class="section" id="categories" aria-labelledby="categories-heading">
+    <div class="container">
+        <header class="section-header">
+            <div>
+                <p class="eyebrow">Shop by room</p>
+                <h2 id="categories-heading" class="section-title">Find Your Perfect Fit</h2>
+            </div>
+            <a href="#" class="text-link">View all categories <span aria-hidden="true">&rarr;</span></a>
+        </header>
+
+        <ul class="category-grid">
+            <li class="category-card category-card--living">
+                <a href="#" class="category-card__link">
+                    <img src="{% static 'images/category-living-room.jpg' %}" width="900" height="1152" loading="lazy"
+                         alt="Grey two-seater sofa beside an oak and white coffee table in a light living room">
+                    <span class="category-card__body">
+                        <span class="category-card__name">Living Room</span>
+                        <span class="category-card__cta">Explore <span aria-hidden="true">&rarr;</span></span>
+                    </span>
+                </a>
+            </li>
+            <li class="category-card category-card--dining">
+                <a href="#" class="category-card__link">
+                    <img src="{% static 'images/category-dining-room.jpg' %}" width="1200" height="675" loading="lazy"
+                         alt="Round black dining table with spindle-back chairs beside a walnut and marble kitchen">
+                    <span class="category-card__body">
+                        <span class="category-card__name">Dining Room</span>
+                        <span class="category-card__cta">Explore <span aria-hidden="true">&rarr;</span></span>
+                    </span>
+                </a>
+            </li>
+            <li class="category-card category-card--office">
+                <a href="#" class="category-card__link">
+                    <img src="{% static 'images/category-office.jpg' %}" width="900" height="900" loading="lazy"
+                         alt="Timber trestle desk and a round wooden stool in a sunlit studio">
+                    <span class="category-card__body">
+                        <span class="category-card__name">Office Furniture</span>
+                        <span class="category-card__cta">Explore <span aria-hidden="true">&rarr;</span></span>
+                    </span>
+                </a>
+            </li>
+            {# No bedroom or outdoor photography is available yet, so these cards are typographic. #}
+            <li class="category-card category-card--bedroom category-card--pending">
+                <a href="#" class="category-card__link">
+                    <span class="category-card__body">
+                        <span class="category-card__note">Photography coming soon</span>
+                        <span class="category-card__name">Bedroom</span>
+                        <span class="category-card__cta">Explore <span aria-hidden="true">&rarr;</span></span>
+                    </span>
+                </a>
+            </li>
+            <li class="category-card category-card--outdoor category-card--pending">
+                <a href="#" class="category-card__link">
+                    <span class="category-card__body">
+                        <span class="category-card__note">Photography coming soon</span>
+                        <span class="category-card__name">Outdoor Furniture</span>
+                        <span class="category-card__cta">Explore <span aria-hidden="true">&rarr;</span></span>
+                    </span>
+                </a>
+            </li>
+        </ul>
+    </div>
 </section>
 
-<section class="final-cta" aria-labelledby="cta-heading">
-    <h2 id="cta-heading">Ready to Transform Your Space?</h2>
-    <p>Browse our full collection or get in touch with our team for advice.</p>
-    <a href="#" class="button">Browse the Shop</a>
-    <a href="#" class="button">Contact Us</a>
+{# ---------- Featured pieces ---------- #}
+{# There is no Product model yet. These are sample pieces, not live inventory: no prices or stock are shown. #}
+<section class="section section--sand" id="pieces" aria-labelledby="pieces-heading">
+    <div class="container">
+        <header class="section-header">
+            <div>
+                <p class="eyebrow">A first look</p>
+                <h2 id="pieces-heading" class="section-title">Pieces You&rsquo;ll Love</h2>
+            </div>
+            <p class="section-header__aside">
+                Our full catalogue is being prepared. These sample pieces show the styles we love;
+                prices and availability will follow.
+            </p>
+        </header>
+
+        <ul class="product-grid">
+            <li>
+                <article class="product-card">
+                    <a href="#" class="product-card__media">
+                        <span class="product-card__badge">Sample</span>
+                        <img src="{% static 'images/product-velvet-sofa.jpg' %}" width="900" height="600" loading="lazy"
+                             alt="Forest-green velvet three-seater sofa with bolster cushions and tapered wooden legs">
+                    </a>
+                    <div class="product-card__body">
+                        <p class="product-card__category">Living Room &middot; Sofas</p>
+                        <h3 class="product-card__name"><a href="#">Velvet Three-Seater Sofa</a></h3>
+                        <p class="product-card__price">Price coming soon</p>
+                        <a href="#" class="text-link text-link--small" aria-label="View details: Velvet Three-Seater Sofa">View details <span aria-hidden="true">&rarr;</span></a>
+                    </div>
+                </article>
+            </li>
+            <li>
+                <article class="product-card">
+                    <a href="#" class="product-card__media">
+                        <span class="product-card__badge">Sample</span>
+                        <img src="{% static 'images/product-leather-sofa.jpg' %}" width="900" height="900" loading="lazy"
+                             alt="Cognac leather sofa with deep button tufting and wooden legs">
+                    </a>
+                    <div class="product-card__body">
+                        <p class="product-card__category">Living Room &middot; Sofas</p>
+                        <h3 class="product-card__name"><a href="#">Tufted Leather Sofa</a></h3>
+                        <p class="product-card__price">Price coming soon</p>
+                        <a href="#" class="text-link text-link--small" aria-label="View details: Tufted Leather Sofa">View details <span aria-hidden="true">&rarr;</span></a>
+                    </div>
+                </article>
+            </li>
+            <li>
+                <article class="product-card">
+                    <a href="#" class="product-card__media">
+                        <span class="product-card__badge">Sample</span>
+                        <img src="{% static 'images/product-boucle-chair.jpg' %}" width="900" height="1125" loading="lazy"
+                             alt="Rounded cream bouclé lounge chair on a low metal base">
+                    </a>
+                    <div class="product-card__body">
+                        <p class="product-card__category">Living Room &middot; Chairs</p>
+                        <h3 class="product-card__name"><a href="#">Rounded Bouclé Lounge Chair</a></h3>
+                        <p class="product-card__price">Price coming soon</p>
+                        <a href="#" class="text-link text-link--small" aria-label="View details: Rounded Bouclé Lounge Chair">View details <span aria-hidden="true">&rarr;</span></a>
+                    </div>
+                </article>
+            </li>
+            <li>
+                <article class="product-card">
+                    <a href="#" class="product-card__media" style="--focus-y: 77%">
+                        <span class="product-card__badge">Sample</span>
+                        <img src="{% static 'images/product-tufted-chair.jpg' %}" width="900" height="1352" loading="lazy"
+                             alt="Ivory button-tufted accent chair with turned white legs">
+                    </a>
+                    <div class="product-card__body">
+                        <p class="product-card__category">Bedroom &middot; Accent Chairs</p>
+                        <h3 class="product-card__name"><a href="#">Tufted Accent Chair</a></h3>
+                        <p class="product-card__price">Price coming soon</p>
+                        <a href="#" class="text-link text-link--small" aria-label="View details: Tufted Accent Chair">View details <span aria-hidden="true">&rarr;</span></a>
+                    </div>
+                </article>
+            </li>
+        </ul>
+    </div>
+</section>
+
+{# ---------- Brand story ---------- #}
+<section class="section story" id="story" aria-labelledby="story-heading">
+    <div class="container story__grid">
+        <div class="story__media">
+            <img class="story__image" src="{% static 'images/story-living-room.jpg' %}" width="960" height="1440" loading="lazy"
+                 alt="Calm living room with a pale grey sofa, carved wooden side tables and a knitted pouf">
+            <img class="story__detail" src="{% static 'images/detail-wood-table.jpg' %}" width="700" height="467" loading="lazy"
+                 alt="Close-up of a round oak table top with a pine cone">
+        </div>
+
+        <div class="story__content">
+            <p class="eyebrow">Our approach</p>
+            <h2 id="story-heading" class="section-title">Designed for Living. Made to&nbsp;Belong.</h2>
+            <p class="story__lead">
+                Create spaces that reflect your personality with furniture that combines thoughtful design,
+                everyday comfort, and timeless appeal.
+            </p>
+
+            <ul class="story__points">
+                <li>
+                    <h3>Comfort first</h3>
+                    <p>Pieces chosen to be lived with, not just looked at.</p>
+                </li>
+                <li>
+                    <h3>Timeless style</h3>
+                    <p>Natural tones and considered shapes that settle into any room.</p>
+                </li>
+                <li>
+                    <h3>Room by room</h3>
+                    <p>Browse by space to find the pieces that fit the way you live.</p>
+                </li>
+            </ul>
+
+            <a href="#" class="button button--outline">More about us</a>
+        </div>
+    </div>
+</section>
+
+{# ---------- Call to action ---------- #}
+<section class="section section--tight" aria-labelledby="cta-heading">
+    <div class="container">
+        <div class="cta-panel">
+            <p class="eyebrow eyebrow--light">Begin with one piece</p>
+            <h2 id="cta-heading" class="cta-panel__title">Your Next Favourite Space Starts Here.</h2>
+            <p class="cta-panel__text">Explore furniture and find pieces that feel right for your home.</p>
+            <a href="#categories" class="button button--light">Explore Furniture</a>
+        </div>
+    </div>
 </section>
 
 {% endblock %}

@@ -1,0 +1,59 @@
+<footer class="site-footer">
+    <div class="container site-footer__grid">
+        <div class="site-footer__brand">
+            <a href="{% url 'home' %}" class="brand brand--light">
+                Sam Stunning <span class="brand__sub">Furniture</span>
+            </a>
+            <p>Furniture that brings comfort, character and timeless style into every room of your home.</p>
+            <ul class="social-links">
+                <li>
+                    <a href="#" aria-label="Instagram (coming soon)">
+                        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6" class="fill"/></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" aria-label="Facebook (coming soon)">
+                        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M14.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.6-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H9v3h2.5V21"/></svg>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <nav class="site-footer__col" aria-labelledby="footer-quick-links">
+            <h2 class="site-footer__heading" id="footer-quick-links">Explore</h2>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="#">Shop</a></li>
+                <li><a href="#">Categories</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+
+        <nav class="site-footer__col" aria-labelledby="footer-categories">
+            <h2 class="site-footer__heading" id="footer-categories">Rooms</h2>
+            <ul>
+                <li><a href="#">Living Room</a></li>
+                <li><a href="#">Bedroom</a></li>
+                <li><a href="#">Dining Room</a></li>
+                <li><a href="#">Office Furniture</a></li>
+                <li><a href="#">Outdoor Furniture</a></li>
+            </ul>
+        </nav>
+
+        <div class="site-footer__col">
+            <h2 class="site-footer__heading">Visit &amp; Contact</h2>
+            {# Placeholder details: replace with the store's real address, phone and email. #}
+            <address>
+                <span>Showroom address to be announced</span>
+                <span>Phone: to be added</span>
+                <span>Email: to be added</span>
+            </address>
+        </div>
+    </div>
+
+    <div class="container site-footer__bottom">
+        <p>&copy; {% now "Y" %} Sam Stunning Furniture. All rights reserved.</p>
+        <a href="#main-content">Back to top</a>
+    </div>
+</footer>

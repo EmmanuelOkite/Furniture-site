@@ -1,26 +1,45 @@
-<nav aria-label="Main navigation">
-    <a href="{% url 'home' %}" class="brand">Sam Stunning Furniture</a>
+{% with current=request.resolver_match.url_name %}
+<header class="site-header" data-site-header>
+    <div class="site-header__bar container">
+        <a href="{% url 'home' %}" class="brand" aria-label="Sam Stunning Furniture, home">
+            Sam Stunning <span class="brand__sub">Furniture</span>
+        </a>
 
-    <ul>
-        <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="#">Shop</a></li>
-        <li><a href="#">Categories</a></li>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Contact</a></li>
-    </ul>
+        <nav class="main-nav" id="main-nav" aria-label="Main navigation" data-main-nav>
+            <ul class="main-nav__list">
+                <li><a href="{% url 'home' %}" class="main-nav__link"{% if current == 'home' %} aria-current="page"{% endif %}>Home</a></li>
+                <li><a href="#" class="main-nav__link">Shop</a></li>
+                <li><a href="#" class="main-nav__link">Categories</a></li>
+                <li><a href="#" class="main-nav__link">About Us</a></li>
+                <li><a href="#" class="main-nav__link">Contact</a></li>
+                <li class="main-nav__item--mobile"><a href="#" class="main-nav__link">My Account</a></li>
+            </ul>
+        </nav>
 
-    <form action="#" method="get" role="search">
-        <label for="navbar-search">Search furniture</label>
-        <input type="search" id="navbar-search" name="q" placeholder="Search furniture...">
-        <button type="submit">Search</button>
-    </form>
-
-    <ul>
-        <li><a href="#" aria-label="My account">Account</a></li>
-        <li>
-            <a href="#" aria-label="Shopping cart, 0 items">
-                Cart <span class="cart-count">0</span>
+        <div class="header-actions">
+            <button type="button" class="icon-button" aria-label="Search" aria-expanded="false" aria-controls="site-search" data-search-toggle>
+                <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
+            </button>
+            <a href="#" class="icon-button" aria-label="My account">
+                <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5"/></svg>
             </a>
-        </li>
-    </ul>
-</nav>
+            <a href="#" class="icon-button cart-link" aria-label="Shopping cart, 0 items">
+                <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.5H6.2L5 8Z"/><path d="M8.5 8V6.5a3.5 3.5 0 0 1 7 0V8"/></svg>
+                <span class="cart-link__count" aria-hidden="true">0</span>
+            </a>
+            <button type="button" class="icon-button menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav" data-menu-toggle>
+                <span class="menu-toggle__lines" aria-hidden="true"></span>
+            </button>
+        </div>
+    </div>
+
+    <div class="site-search" id="site-search" data-site-search hidden>
+        <form class="site-search__form container" action="#" method="get" role="search">
+            <label for="site-search-input" class="visually-hidden">Search furniture</label>
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
+            <input type="search" id="site-search-input" name="q" placeholder="Search sofas, chairs, tables…" autocomplete="off">
+            <button type="submit" class="button button--primary button--small">Search</button>
+        </form>
+    </div>
+</header>
+{% endwith %}

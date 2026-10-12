@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}{% if query %}Search: {{ query }}{% else %}Search{% endif %} | Sam Stunning Furniture{% endblock %}
+
+{% block meta_description %}Search the Sam Stunning Furniture collection.{% endblock %}
+
+{% block content %}
+<section class="section search-page" aria-labelledby="search-heading">
+    <div class="container">
+        <header class="search-page__header">
+            <p class="eyebrow">Search</p>
+            <h1 id="search-heading" class="section-title">
+                {% if query %}Results for &ldquo;{{ query }}&rdquo;{% else %}What are you looking for?{% endif %}
+            </h1>
+
+            <form class="search-page__form" action="{% url 'search' %}" method="get" role="search">
+                <label for="search-page-input" class="visually-hidden">Search furniture</label>
+                <input type="search" id="search-page-input" name="q" value="{{ query }}"
+                       placeholder="Search sofas, chairs, tables…" maxlength="100" required>
+                <button type="submit" class="button button--primary">Search</button>
+            </form>
+
+            {% if page_obj %}
+                <p class="search-page__count" role="status">
+                    {{ page_obj.paginator.count }} piece{{ page_obj.paginator.count|pluralize }} found
+                </p>
+            {% endif %}
+        </header>
+
+        {% if page_obj and page_obj.paginator.count %}
+            <ul class="product-grid">
+                {% for product in page_obj %}
+                    <li>{% include "includes/product_card.html" %}</li>
+                {% endfor %}
+            </ul>
+
+            {% if page_obj.has_other_pages %}
+                <nav class="pagination" aria-label="Search results pages">
+                    {% if page_obj.has_previous %}
+                        <a class="text-link" href="?q={{ query|urlencode }}&amp;page={{ page_obj.previous_page_number }}"><span aria-hidden="true">&larr;</span> Previous</a>
+                    {% endif %}
+                    <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                    {% if page_obj.has_next %}
+                        <a class="text-link" href="?q={{ query|urlencode }}&amp;page={{ page_obj.next_page_number }}">Next <span aria-hidden="true">&rarr;</span></a>
+                    {% endif %}
+                </nav>
+            {% endif %}
+
+        {% elif query %}
+            <div class="search-empty">
+                <h2 class="search-empty__title">Nothing matched &ldquo;{{ query }}&rdquo;</h2>
+                <p>Check the spelling, try a more general word such as &ldquo;sofa&rdquo; or &ldquo;chair&rdquo;, or browse by room instead.</p>
+                <a href="{% url 'home' %}#categories" class="button button--outline">Browse by room</a>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

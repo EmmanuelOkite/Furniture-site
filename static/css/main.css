@@ -347,6 +347,9 @@ address {
 }
 
 .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
     justify-self: start;
     font-family: var(--font-serif);
     font-size: 1.375rem;
@@ -355,6 +358,12 @@ address {
     letter-spacing: .16em;
     text-transform: uppercase;
     white-space: nowrap;
+}
+
+.brand__mark {
+    flex: none;
+    width: auto;
+    height: 48px;
 }
 
 .brand__sub {
@@ -818,6 +827,16 @@ address {
     margin-top: auto;
 }
 
+.product-card__no-image {
+    display: grid;
+    place-items: center;
+    height: 100%;
+    color: var(--text-muted);
+    font-size: .8125rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
 .product-card:hover .product-card__media img {
     transform: scale(1.035);
 }
@@ -940,6 +959,81 @@ address {
 
 .cta-panel :focus-visible {
     outline-color: var(--ivory);
+}
+
+
+/* Search results page */
+
+.search-page__header {
+    max-width: 46rem;
+    margin-bottom: clamp(40px, 5vw, 64px);
+}
+
+.search-page__header .section-title {
+    overflow-wrap: anywhere;
+}
+
+.search-page__form {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+}
+
+.search-page__form input {
+    flex: 1;
+    min-width: 0;
+    min-height: 54px;
+    padding: 0 18px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--ivory-soft);
+    font-size: 1.0625rem;
+}
+
+.search-page__form input:focus {
+    outline: none;
+    border-color: var(--forest);
+    box-shadow: 0 0 0 1px var(--forest);
+}
+
+.search-page__count {
+    margin-top: 20px;
+    color: var(--text-muted);
+}
+
+.search-page .product-card {
+    border: 1px solid var(--line);
+}
+
+.search-empty {
+    max-width: 36rem;
+    padding: clamp(32px, 5vw, 56px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--sand);
+}
+
+.search-empty__title {
+    margin-bottom: 12px;
+    font-family: var(--font-serif);
+    font-size: 1.875rem;
+    font-weight: 500;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+}
+
+.search-empty p {
+    margin-bottom: 28px;
+    color: var(--text-muted);
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 56px;
+    color: var(--text-muted);
 }
 
 
@@ -1224,8 +1318,13 @@ address {
 
 @media (max-width: 560px) {
     .brand {
+        gap: 10px;
         font-size: 1.125rem;
         letter-spacing: .12em;
+    }
+
+    .brand__mark {
+        height: 38px;
     }
 
     .brand__sub {
@@ -1256,6 +1355,33 @@ address {
 
     .site-footer__grid {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 400px) {
+    .brand {
+        gap: 8px;
+        font-size: 1rem;
+        letter-spacing: .08em;
+    }
+
+    .brand__mark {
+        height: 32px;
+    }
+
+    .brand__sub {
+        letter-spacing: .3em;
+    }
+}
+
+/* Very small phones: the logo mark alone (the link keeps its aria-label). */
+@media (max-width: 340px) {
+    .site-header .brand__name {
+        display: none;
+    }
+
+    .brand__mark {
+        height: 40px;
     }
 }
 

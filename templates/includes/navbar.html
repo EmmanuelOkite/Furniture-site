@@ -1,8 +1,10 @@
+{% load static %}
 {% with current=request.resolver_match.url_name %}
 <header class="site-header" data-site-header>
     <div class="site-header__bar container">
         <a href="{% url 'home' %}" class="brand" aria-label="Sam Stunning Furniture, home">
-            Sam Stunning <span class="brand__sub">Furniture</span>
+            <img class="brand__mark" src="{% static 'images/logo-mark.png' %}" width="73" height="80" alt="">
+            <span class="brand__name">Sam Stunning <span class="brand__sub">Furniture</span></span>
         </a>
 
         <nav class="main-nav" id="main-nav" aria-label="Main navigation" data-main-nav>
@@ -34,10 +36,10 @@
     </div>
 
     <div class="site-search" id="site-search" data-site-search hidden>
-        <form class="site-search__form container" action="#" method="get" role="search">
+        <form class="site-search__form container" action="{% url 'search' %}" method="get" role="search">
             <label for="site-search-input" class="visually-hidden">Search furniture</label>
             <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
-            <input type="search" id="site-search-input" name="q" placeholder="Search sofas, chairs, tables…" autocomplete="off">
+            <input type="search" id="site-search-input" name="q" placeholder="Search sofas, chairs, tables…" autocomplete="off" maxlength="100" required>
             <button type="submit" class="button button--primary button--small">Search</button>
         </form>
     </div>

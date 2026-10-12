@@ -51,6 +51,26 @@ Not used: ambo-ampeng, inside-weather, sven-brandsma, virender-singh (style or c
 - Screenshots at 1440, 820, 390 and 360 px wide: no horizontal scrolling; the mobile menu and search panel open correctly.
 - No browser console errors from the site.
 
+## Update 2026-10-12: logo and search
+
+**Logo.** The gold monogram was cut out of `furniture_site/images/image.png` with a transparent background and saved as `static/images/logo-mark.png`. It sits beside the existing text name in the navbar. The full logo (monogram plus navy wordmark on paper) was rejected for the navbar for three reasons: the lettering is unreadable at navbar height, navy disappears on the dark hero, and the paper background would show as a box. At 340px wide and below, only the mark is shown.
+
+**Navbar icons.** No notifications button existed. The user chose to keep Search, Account and Cart unchanged.
+
+**Product model** (`furnitureapp/models.py`). Fields: name, slug, room (Living Room / Bedroom / Dining Room / Office / Outdoor), product_type, description, price (optional, shows "Price coming soon"), image, image_alt, is_sample, is_active and timestamps. Registered in the admin. Migration `0002_sample_products` adds the four homepage samples with `is_sample=True`; reversing it removes them.
+- `image` is a **static file path**, not an upload (`ImageField`), on purpose: uploads need Pillow and persistent media storage, and Render's disk is wiped on every deploy. Switch to `ImageField` once a storage service (e.g. S3 or Cloudinary) is chosen. The model validates that the path exists.
+- Price has no currency symbol yet, because the currency is still an open question.
+
+**Search** (`/search/?q=…`, `views.search`):
+- Every word in the query must match at least one of name, type, description or room label (case-insensitive). So "green sofa" finds the velvet sofa and "green bed" finds nothing.
+- Only `is_active` products are searched.
+- Queries are trimmed and capped at 100 characters. Results show 12 per page. A blank query shows only the search form; no matches shows a "Nothing matched" message.
+- Uses `icontains` (SQL `ILIKE`). That is fine for a catalogue of hundreds of products; consider PostgreSQL full-text search if it grows into the thousands.
+
+**Tests** (`furnitureapp/tests.py`): 9 tests covering matching, multi-word queries, room labels, inactive products, the empty state, a blank query and HTML escaping. All pass.
+
+**Homepage featured cards** are still hard-coded in `home.html`. Next step: render them from `Product` using `includes/product_card.html`.
+
 ## Open items
 
 1. **Security:** `.env` is tracked in git (the `.gitignore` is inside `furniture_site/`, so it does not apply at the project root). Move `.gitignore` to the project root, untrack `.env`, and rotate any credentials it contained if it was ever pushed.

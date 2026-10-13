@@ -3,6 +3,7 @@ from django.db.models import Q
 from django.shortcuts import redirect, render
 
 from .models import Product
+from .rooms import ROOM_PAGES
 
 # Longer queries are cut to this length; no one types a 100-character furniture search.
 MAX_QUERY_LENGTH = 100
@@ -24,9 +25,9 @@ def collection(request):
     room = request.GET.get('room', '')
     if room not in Product.Room.values:
         room = ''
-    # Living Room has its own page; send old or shared links there.
-    if room == Product.Room.LIVING_ROOM:
-        return redirect('living_room')
+    # Rooms with their own page (Living Room, Bedroom): send old or shared links there.
+    if room in ROOM_PAGES:
+        return redirect(ROOM_PAGES[room]['url_name'])
     if room:
         products = products.filter(room=room)
 
@@ -41,19 +42,18 @@ def collection(request):
     })
 
 
-def living_room(request):
-    """Dedicated Living Room page: every active living room piece, newest first."""
-    products = Product.objects.filter(
-        is_active=True, room=Product.Room.LIVING_ROOM,
-    ).order_by('-created_at', 'name')
+def room_page(request, room):
+    """A room's own page (see rooms.ROOM_PAGES): every active piece for it, newest first."""
+    products = Product.objects.filter(is_active=True, room=room).order_by('-created_at', 'name')
 
     paginator = Paginator(products, COLLECTION_PER_PAGE)
     page_obj = paginator.get_page(request.GET.get('page'))
 
-    return render(request, 'living_room.html', {
+    return render(request, 'room_page.html', {
         'page_obj': page_obj,
         'room_links': room_links(),
-        'current_room': Product.Room.LIVING_ROOM,
+        'current_room': room,
+        'room_page': ROOM_PAGES[room],
     })
 
 

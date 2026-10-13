@@ -1,0 +1,26 @@
+"""
+Rooms that have their own page (banner + every product for that room).
+
+To give another room a page: add an entry here keyed by its Product.Room value,
+add a matching path() in furniture_site/urls.py, and add a banner image.
+Rooms without an entry are listed on the collection page (/collection/?room=...).
+"""
+
+ROOM_PAGES = {
+    "living-room": {
+        "url_name": "living_room",
+        "title": "Living Room",
+        "intro": "Sofas, lounge sets, chairs and media units for the room where everyone gathers.",
+        "meta_description": "Sofas, sofa sets, chairs and TV units for the living room from Sam's Stunning Furniture, Kyanja, Kampala.",
+        "banner": "images/living-banner.jpg",
+        "banner_alt": "Low grey lounge sofa and a round marble coffee table in a warm, softly lit living room",
+    },
+    "bedroom": {
+        "url_name": "bedroom",
+        "title": "Bedroom",
+        "intro": "Beds, bedside tables and lighting for calm, restful rooms.",
+        "meta_description": "Beds, bedroom sets, bedside tables and lamps from Sam's Stunning Furniture, Kyanja, Kampala.",
+        "banner": "images/bedroom-banner.jpg",
+        "banner_alt": "Charcoal upholstered headboard against a slatted timber wall lit by amber pendant lamps",
+    },
+}

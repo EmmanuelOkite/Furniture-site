@@ -103,9 +103,9 @@ class CollectionAndHomeTests(TestCase):
         self.assertContains(response, "Solid oak.")  # details are shown
 
     def test_collection_filters_by_room(self):
-        response = self.client.get(reverse("collection"), {"room": "bedroom"})
-        self.assertContains(response, "Oak Bed Frame")
-        self.assertNotContains(response, "Round Table")
+        response = self.client.get(reverse("collection"), {"room": "dining-room"})
+        self.assertContains(response, "Round Table")
+        self.assertNotContains(response, "Oak Bed Frame")
 
     def test_unknown_room_shows_everything(self):
         response = self.client.get(reverse("collection"), {"room": "garage"})
@@ -158,4 +158,27 @@ class LivingRoomPageTests(TestCase):
 
     def test_product_details_link_uses_room_page(self):
         self.assertEqual(self.sofa.get_absolute_url(), "/living-room/#blue-velvet-sofa")
-        self.assertEqual(self.bed.get_absolute_url(), "/collection/?room=bedroom#oak-bed-frame")
+        self.assertEqual(self.bed.get_absolute_url(), "/bedroom/#oak-bed-frame")
+        table = Product(name="Table", slug="table", room=Product.Room.DINING_ROOM)
+        self.assertEqual(table.get_absolute_url(), "/collection/?room=dining-room#table")
+
+    def test_bedroom_page_lists_only_bedroom_pieces_with_prices(self):
+        response = self.client.get(reverse("bedroom"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "<h1", count=1)
+        self.assertContains(response, "Bedroom</h1>")
+        self.assertContains(response, "Oak Bed Frame")
+        self.assertContains(response, "UGX 1,500,000")
+        self.assertNotContains(response, "Blue Velvet Sofa")
+
+    def test_collection_bedroom_filter_redirects_to_page(self):
+        response = self.client.get(reverse("collection"), {"room": "bedroom"})
+        self.assertRedirects(response, reverse("bedroom"))
+
+    def test_bedroom_links_point_to_page(self):
+        url = reverse("bedroom")
+        home = self.client.get(reverse("home")).content.decode()
+        collection = self.client.get(reverse("collection")).content.decode()
+        self.assertIn(f'href="{url}" class="category-card__link"', home)    # category card
+        self.assertIn(f'<a href="{url}">Bedroom</a>', home)                  # footer
+        self.assertIn(f'href="{url}" class="room-filter__link"', collection)  # filter button

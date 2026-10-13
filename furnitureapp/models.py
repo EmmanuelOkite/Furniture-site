@@ -3,6 +3,8 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
 
+from .rooms import ROOM_PAGES
+
 
 class Product(models.Model):
     """A piece of furniture shown on the site."""
@@ -61,9 +63,9 @@ class Product(models.Model):
 
     @classmethod
     def room_url(cls, room):
-        """Page that lists a room: Living Room has its own page, the rest use the collection filter."""
-        if room == cls.Room.LIVING_ROOM:
-            return reverse("living_room")
+        """Page that lists a room: its own page if it has one, otherwise the collection filter."""
+        if room in ROOM_PAGES:
+            return reverse(ROOM_PAGES[room]["url_name"])
         return f"{reverse('collection')}?room={room}"
 
     def get_absolute_url(self):

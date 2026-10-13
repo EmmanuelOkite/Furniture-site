@@ -90,6 +90,15 @@ Not used: ambo-ampeng, inside-weather, sven-brandsma, virender-singh (style or c
 - `Product.room_url()` decides which page lists a room, so a future room page only needs a change there.
 - **Tests:** 19, all passing.
 
+## Update 2026-10-13: Bedroom page and shared room pages
+
+- **Bedroom page** `/bedroom/`: same layout as Living Room. Migration `0006` adds 9 bedroom pieces (`static/images/bedroom-*.jpg`), priced UGX 280,000 to 7,800,000 (placeholders). The page shows all 11 bedroom pieces, newest first.
+- **Refactor:** Living Room and Bedroom now share one view (`views.room_page`) and one template (`templates/room_page.html`; `living_room.html` was removed). Each room's title, intro text and banner live in `furnitureapp/rooms.py` (`ROOM_PAGES`).
+  - *Why:* copying the Living Room page would have meant two near-identical templates and views to keep in sync, and a third copy for each new room.
+  - *To add another room page:* add an entry to `ROOM_PAGES`, add a `path()` in `furniture_site/urls.py`, and add a banner image. All links, redirects and "View details" anchors then follow automatically through `Product.room_url()`.
+- **Links:** the homepage Bedroom card, footer Bedroom, and the Bedroom room filter button now go to `/bedroom/`. `/collection/?room=bedroom` redirects (302) there.
+- **Tests:** 22, all passing.
+
 ## Open items
 
 1. **Security:** `.env` is tracked in git (the `.gitignore` is inside `furniture_site/`, so it does not apply at the project root). Move `.gitignore` to the project root, untrack `.env`, and rotate any credentials it contained if it was ever pushed.

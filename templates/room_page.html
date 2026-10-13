@@ -1,23 +1,27 @@
 {% extends "base.html" %}
 {% load static %}
+{% comment %}
+    Shared template for rooms with their own page (Living Room, Bedroom).
+    Text and banner come from furnitureapp/rooms.py.
+{% endcomment %}
 
-{% block title %}Living Room Furniture | Sam's Stunning Furniture{% endblock %}
+{% block title %}{{ room_page.title }} Furniture | Sam's Stunning Furniture{% endblock %}
 
-{% block meta_description %}Sofas, sofa sets, chairs and TV units for the living room from Sam's Stunning Furniture, Kyanja, Kampala.{% endblock %}
+{% block meta_description %}{{ room_page.meta_description }}{% endblock %}
 
 {% block content %}
 <section class="room-banner" aria-labelledby="room-heading">
-    <img class="room-banner__image" src="{% static 'images/living-banner.jpg' %}" width="2000" height="769"
-         alt="Low grey lounge sofa and a round marble coffee table in a warm, softly lit living room">
+    <img class="room-banner__image" src="{% static room_page.banner %}" width="2000" height="769"
+         alt="{{ room_page.banner_alt }}">
     <div class="room-banner__shade" aria-hidden="true"></div>
     <div class="room-banner__inner container">
         <p class="eyebrow eyebrow--light">Shop by room</p>
-        <h1 id="room-heading" class="room-banner__title">Living Room</h1>
-        <p class="room-banner__text">Sofas, lounge sets, chairs and media units for the room where everyone gathers.</p>
+        <h1 id="room-heading" class="room-banner__title">{{ room_page.title }}</h1>
+        <p class="room-banner__text">{{ room_page.intro }}</p>
     </div>
 </section>
 
-<section class="section collection-page" aria-label="Living room furniture">
+<section class="section collection-page" aria-label="{{ room_page.title }} furniture">
     <div class="container">
         {% include "includes/room_filter.html" %}
 
@@ -33,7 +37,7 @@
             </ul>
 
             {% if page_obj.has_other_pages %}
-                <nav class="pagination" aria-label="Living room pages">
+                <nav class="pagination" aria-label="{{ room_page.title }} pages">
                     {% if page_obj.has_previous %}
                         <a class="text-link" href="?page={{ page_obj.previous_page_number }}"><span aria-hidden="true">&larr;</span> Previous</a>
                     {% endif %}
@@ -46,7 +50,7 @@
         {% else %}
             <div class="search-empty">
                 <h2 class="search-empty__title">Nothing here yet</h2>
-                <p>New living room pieces are on their way. In the meantime, explore the rest of the collection.</p>
+                <p>New pieces for this room are on their way. In the meantime, explore the rest of the collection.</p>
                 <a href="{% url 'collection' %}" class="button button--outline">See all rooms</a>
             </div>
         {% endif %}

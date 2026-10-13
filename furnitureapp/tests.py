@@ -121,3 +121,41 @@ class CollectionAndHomeTests(TestCase):
         self.assertContains(response, "Oak Bed Frame")
         self.assertContains(response, "UGX 1,500,000")
         self.assertNotContains(response, "Round Table")
+
+
+@override_settings(STORAGES=PLAIN_STATIC_STORAGE)
+class LivingRoomPageTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        Product.objects.all().delete()
+        cls.sofa = Product.objects.create(
+            name="Blue Velvet Sofa", slug="blue-velvet-sofa", room=Product.Room.LIVING_ROOM,
+            product_type="Sofas", description="Ocean blue.", price=2900000,
+        )
+        cls.bed = Product.objects.create(
+            name="Oak Bed Frame", slug="oak-bed-frame", room=Product.Room.BEDROOM,
+            product_type="Beds", price=1500000,
+        )
+
+    def test_page_lists_only_living_room_pieces_with_prices(self):
+        response = self.client.get(reverse("living_room"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Blue Velvet Sofa")
+        self.assertContains(response, "UGX 2,900,000")
+        self.assertNotContains(response, "Oak Bed Frame")
+
+    def test_collection_living_room_filter_redirects_to_page(self):
+        response = self.client.get(reverse("collection"), {"room": "living-room"})
+        self.assertRedirects(response, reverse("living_room"))
+
+    def test_living_room_links_point_to_page(self):
+        url = reverse("living_room")
+        home = self.client.get(reverse("home")).content.decode()
+        collection = self.client.get(reverse("collection")).content.decode()
+        self.assertIn(f'href="{url}" class="category-card__link"', home)   # category card
+        self.assertIn(f'<a href="{url}">Living Room</a>', home)              # footer
+        self.assertIn(f'href="{url}" class="room-filter__link"', collection)  # filter button
+
+    def test_product_details_link_uses_room_page(self):
+        self.assertEqual(self.sofa.get_absolute_url(), "/living-room/#blue-velvet-sofa")
+        self.assertEqual(self.bed.get_absolute_url(), "/collection/?room=bedroom#oak-bed-frame")

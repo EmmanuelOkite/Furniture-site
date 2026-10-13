@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from .models import Product
 
@@ -24,6 +24,9 @@ def collection(request):
     room = request.GET.get('room', '')
     if room not in Product.Room.values:
         room = ''
+    # Living Room has its own page; send old or shared links there.
+    if room == Product.Room.LIVING_ROOM:
+        return redirect('living_room')
     if room:
         products = products.filter(room=room)
 
@@ -32,10 +35,31 @@ def collection(request):
 
     return render(request, 'collection.html', {
         'page_obj': page_obj,
-        'rooms': Product.Room.choices,
+        'room_links': room_links(),
         'current_room': room,
         'current_room_label': Product.Room(room).label if room else '',
     })
+
+
+def living_room(request):
+    """Dedicated Living Room page: every active living room piece, newest first."""
+    products = Product.objects.filter(
+        is_active=True, room=Product.Room.LIVING_ROOM,
+    ).order_by('-created_at', 'name')
+
+    paginator = Paginator(products, COLLECTION_PER_PAGE)
+    page_obj = paginator.get_page(request.GET.get('page'))
+
+    return render(request, 'living_room.html', {
+        'page_obj': page_obj,
+        'room_links': room_links(),
+        'current_room': Product.Room.LIVING_ROOM,
+    })
+
+
+def room_links():
+    """(value, label, url) for each room, used by the room filter buttons."""
+    return [(value, label, Product.room_url(value)) for value, label in Product.Room.choices]
 
 
 def search_products(query):

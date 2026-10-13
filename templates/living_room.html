@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Living Room Furniture | Sam's Stunning Furniture{% endblock %}
+
+{% block meta_description %}Sofas, sofa sets, chairs and TV units for the living room from Sam's Stunning Furniture, Kyanja, Kampala.{% endblock %}
+
+{% block content %}
+<section class="room-banner" aria-labelledby="room-heading">
+    <img class="room-banner__image" src="{% static 'images/living-banner.jpg' %}" width="2000" height="769"
+         alt="Low grey lounge sofa and a round marble coffee table in a warm, softly lit living room">
+    <div class="room-banner__shade" aria-hidden="true"></div>
+    <div class="room-banner__inner container">
+        <p class="eyebrow eyebrow--light">Shop by room</p>
+        <h1 id="room-heading" class="room-banner__title">Living Room</h1>
+        <p class="room-banner__text">Sofas, lounge sets, chairs and media units for the room where everyone gathers.</p>
+    </div>
+</section>
+
+<section class="section collection-page" aria-label="Living room furniture">
+    <div class="container">
+        {% include "includes/room_filter.html" %}
+
+        <p class="collection-page__count" role="status">
+            {{ page_obj.paginator.count }} piece{{ page_obj.paginator.count|pluralize }} &middot; prices in Ugandan shillings
+        </p>
+
+        {% if page_obj.paginator.count %}
+            <ul class="product-grid product-grid--collection">
+                {% for product in page_obj %}
+                    <li>{% include "includes/product_card.html" with detailed=True %}</li>
+                {% endfor %}
+            </ul>
+
+            {% if page_obj.has_other_pages %}
+                <nav class="pagination" aria-label="Living room pages">
+                    {% if page_obj.has_previous %}
+                        <a class="text-link" href="?page={{ page_obj.previous_page_number }}"><span aria-hidden="true">&larr;</span> Previous</a>
+                    {% endif %}
+                    <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                    {% if page_obj.has_next %}
+                        <a class="text-link" href="?page={{ page_obj.next_page_number }}">Next <span aria-hidden="true">&rarr;</span></a>
+                    {% endif %}
+                </nav>
+            {% endif %}
+        {% else %}
+            <div class="search-empty">
+                <h2 class="search-empty__title">Nothing here yet</h2>
+                <p>New living room pieces are on their way. In the meantime, explore the rest of the collection.</p>
+                <a href="{% url 'collection' %}" class="button button--outline">See all rooms</a>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

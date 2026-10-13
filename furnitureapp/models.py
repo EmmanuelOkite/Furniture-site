@@ -1,6 +1,7 @@
 from django.contrib.staticfiles import finders
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.urls import reverse
 
 
 class Product(models.Model):
@@ -57,6 +58,17 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+    @classmethod
+    def room_url(cls, room):
+        """Page that lists a room: Living Room has its own page, the rest use the collection filter."""
+        if room == cls.Room.LIVING_ROOM:
+            return reverse("living_room")
+        return f"{reverse('collection')}?room={room}"
+
+    def get_absolute_url(self):
+        # Products have no detail page yet, so link to the card on its room's page.
+        return f"{self.room_url(self.room)}#{self.slug}"
 
     def clean(self):
         # A wrong path would break the page in production (manifest static storage),

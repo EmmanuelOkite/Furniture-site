@@ -1,0 +1,12 @@
+<nav class="room-filter" aria-label="Browse by room">
+    <ul>
+        <li>
+            <a href="{% url 'collection' %}" class="room-filter__link"{% if not current_room %} aria-current="page"{% endif %}>All rooms</a>
+        </li>
+        {% for value, label, url in room_links %}
+            <li>
+                <a href="{{ url }}" class="room-filter__link"{% if value == current_room %} aria-current="page"{% endif %}>{{ label }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</nav>

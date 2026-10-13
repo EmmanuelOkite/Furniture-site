@@ -3,8 +3,7 @@
     One product card. Options:
       detailed=True  shows the description and drops the "View details" link (used on the collection page).
 {% endcomment %}
-{% url 'collection' as collection_url %}
-{% with details_url=collection_url|add:"?room="|add:product.room|add:"#"|add:product.slug %}
+{% with details_url=product.get_absolute_url %}
 <article class="product-card{% if detailed %} product-card--detailed{% endif %}"{% if detailed %} id="{{ product.slug }}"{% endif %}>
     {% if detailed %}
         <div class="product-card__media">

@@ -82,6 +82,14 @@ Not used: ambo-ampeng, inside-weather, sven-brandsma, virender-singh (style or c
 - **"View details"** links go to the product on the collection page (`/collection/?room=…#slug`), which highlights it. There is no separate product detail page.
 - **Tests:** 15, all passing.
 
+## Update 2026-10-13: Living Room page
+
+- **New page** `/living-room/` (`views.living_room`, `templates/living_room.html`): a photo banner, the room filter buttons, and every active living room product, newest first, each with photo, details and UGX price.
+- **Products:** migration `0005` adds 9 living room pieces from the new Pexels photos (`static/images/living-*.jpg`, pre-cropped to 5:4), priced UGX 700,000 to 5,800,000. The prices are placeholders.
+- **Links:** every Living Room link goes to the new page: the homepage category card, footer Rooms, the room filter button on the Collection page, and "View details" on living room product cards (`Product.get_absolute_url`). `/collection/?room=living-room` redirects (302) to `/living-room/`, so old links still work.
+- `Product.room_url()` decides which page lists a room, so a future room page only needs a change there.
+- **Tests:** 19, all passing.
+
 ## Open items
 
 1. **Security:** `.env` is tracked in git (the `.gitignore` is inside `furniture_site/`, so it does not apply at the project root). Move `.gitignore` to the project root, untrack `.env`, and rotate any credentials it contained if it was ever pushed.

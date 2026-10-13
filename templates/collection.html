@@ -17,18 +17,7 @@
             </p>
         </header>
 
-        <nav class="room-filter" aria-label="Filter by room">
-            <ul>
-                <li>
-                    <a href="{% url 'collection' %}" class="room-filter__link"{% if not current_room %} aria-current="page"{% endif %}>All rooms</a>
-                </li>
-                {% for value, label in rooms %}
-                    <li>
-                        <a href="{% url 'collection' %}?room={{ value }}" class="room-filter__link"{% if value == current_room %} aria-current="page"{% endif %}>{{ label }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </nav>
+        {% include "includes/room_filter.html" %}
 
         <p class="collection-page__count" role="status">
             {{ page_obj.paginator.count }} piece{{ page_obj.paginator.count|pluralize }}

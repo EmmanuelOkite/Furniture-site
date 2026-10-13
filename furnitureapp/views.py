@@ -7,10 +7,35 @@ from .models import Product
 # Longer queries are cut to this length; no one types a 100-character furniture search.
 MAX_QUERY_LENGTH = 100
 RESULTS_PER_PAGE = 12
+COLLECTION_PER_PAGE = 24
+FEATURED_LIMIT = 4
 
 
 def home(request):
-    return render(request, 'home.html')
+    featured = Product.objects.filter(is_active=True, is_featured=True)[:FEATURED_LIMIT]
+    return render(request, 'home.html', {'featured_products': featured})
+
+
+def collection(request):
+    """All active products, optionally filtered by room (?room=bedroom)."""
+    products = Product.objects.filter(is_active=True).order_by('room', 'name')
+
+    # Ignore unknown room values instead of showing an empty page.
+    room = request.GET.get('room', '')
+    if room not in Product.Room.values:
+        room = ''
+    if room:
+        products = products.filter(room=room)
+
+    paginator = Paginator(products, COLLECTION_PER_PAGE)
+    page_obj = paginator.get_page(request.GET.get('page'))
+
+    return render(request, 'collection.html', {
+        'page_obj': page_obj,
+        'rooms': Product.Room.choices,
+        'current_room': room,
+        'current_room_label': Product.Room(room).label if room else '',
+    })
 
 
 def search_products(query):

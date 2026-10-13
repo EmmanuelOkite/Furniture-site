@@ -41,7 +41,7 @@
 </section>
 
 {# ---------- Categories ---------- #}
-{# Rooms are not stored in the database yet; links point to "#" until a category page exists. #}
+{# Each card opens the collection page filtered to that room. #}
 <section class="section" id="categories" aria-labelledby="categories-heading">
     <div class="container">
         <header class="section-header">
@@ -49,12 +49,12 @@
                 <p class="eyebrow">Shop by room</p>
                 <h2 id="categories-heading" class="section-title">Find Your Perfect Fit</h2>
             </div>
-            <a href="#" class="text-link">View all categories <span aria-hidden="true">&rarr;</span></a>
+            <a href="{% url 'collection' %}" class="text-link">View all categories <span aria-hidden="true">&rarr;</span></a>
         </header>
 
         <ul class="category-grid">
             <li class="category-card category-card--living">
-                <a href="#" class="category-card__link">
+                <a href="{% url 'collection' %}?room=living-room" class="category-card__link">
                     <img src="{% static 'images/category-living-room.jpg' %}" width="900" height="1152" loading="lazy"
                          alt="Grey two-seater sofa beside an oak and white coffee table in a light living room">
                     <span class="category-card__body">
@@ -64,7 +64,7 @@
                 </a>
             </li>
             <li class="category-card category-card--dining">
-                <a href="#" class="category-card__link">
+                <a href="{% url 'collection' %}?room=dining-room" class="category-card__link">
                     <img src="{% static 'images/category-dining-room.jpg' %}" width="1200" height="675" loading="lazy"
                          alt="Round black dining table with spindle-back chairs beside a walnut and marble kitchen">
                     <span class="category-card__body">
@@ -74,7 +74,7 @@
                 </a>
             </li>
             <li class="category-card category-card--office">
-                <a href="#" class="category-card__link">
+                <a href="{% url 'collection' %}?room=office" class="category-card__link">
                     <img src="{% static 'images/category-office.jpg' %}" width="900" height="900" loading="lazy"
                          alt="Timber trestle desk and a round wooden stool in a sunlit studio">
                     <span class="category-card__body">
@@ -83,20 +83,21 @@
                     </span>
                 </a>
             </li>
-            {# No bedroom or outdoor photography is available yet, so these cards are typographic. #}
-            <li class="category-card category-card--bedroom category-card--pending">
-                <a href="#" class="category-card__link">
+            <li class="category-card category-card--bedroom">
+                <a href="{% url 'collection' %}?room=bedroom" class="category-card__link">
+                    <img src="{% static 'images/category-bedroom.jpg' %}" width="1000" height="667" loading="lazy"
+                         alt="Carved walnut bed and wardrobe in a cream bedroom with polished wood floors">
                     <span class="category-card__body">
-                        <span class="category-card__note">Photography coming soon</span>
                         <span class="category-card__name">Bedroom</span>
                         <span class="category-card__cta">Explore <span aria-hidden="true">&rarr;</span></span>
                     </span>
                 </a>
             </li>
-            <li class="category-card category-card--outdoor category-card--pending">
-                <a href="#" class="category-card__link">
+            <li class="category-card category-card--outdoor">
+                <a href="{% url 'collection' %}?room=outdoor" class="category-card__link">
+                    <img src="{% static 'images/category-outdoor.jpg' %}" width="1000" height="665" loading="lazy"
+                         alt="Cushioned banquette and round wooden bistro tables on a planted terrace">
                     <span class="category-card__body">
-                        <span class="category-card__note">Photography coming soon</span>
                         <span class="category-card__name">Outdoor Furniture</span>
                         <span class="category-card__cta">Explore <span aria-hidden="true">&rarr;</span></span>
                     </span>
@@ -107,81 +108,23 @@
 </section>
 
 {# ---------- Featured pieces ---------- #}
-{# There is no Product model yet. These are sample pieces, not live inventory: no prices or stock are shown. #}
+{# Products ticked "Featured" in the admin (up to four). #}
 <section class="section section--sand" id="pieces" aria-labelledby="pieces-heading">
     <div class="container">
         <header class="section-header">
             <div>
-                <p class="eyebrow">A first look</p>
+                <p class="eyebrow">Featured</p>
                 <h2 id="pieces-heading" class="section-title">Pieces You&rsquo;ll Love</h2>
             </div>
-            <p class="section-header__aside">
-                Our full catalogue is being prepared. These sample pieces show the styles we love;
-                prices and availability will follow.
-            </p>
+            <a href="{% url 'collection' %}" class="text-link">See the full collection <span aria-hidden="true">&rarr;</span></a>
         </header>
 
         <ul class="product-grid">
-            <li>
-                <article class="product-card">
-                    <a href="#" class="product-card__media">
-                        <span class="product-card__badge">Sample</span>
-                        <img src="{% static 'images/product-velvet-sofa.jpg' %}" width="900" height="600" loading="lazy"
-                             alt="Forest-green velvet three-seater sofa with bolster cushions and tapered wooden legs">
-                    </a>
-                    <div class="product-card__body">
-                        <p class="product-card__category">Living Room &middot; Sofas</p>
-                        <h3 class="product-card__name"><a href="#">Velvet Three-Seater Sofa</a></h3>
-                        <p class="product-card__price">Price coming soon</p>
-                        <a href="#" class="text-link text-link--small" aria-label="View details: Velvet Three-Seater Sofa">View details <span aria-hidden="true">&rarr;</span></a>
-                    </div>
-                </article>
-            </li>
-            <li>
-                <article class="product-card">
-                    <a href="#" class="product-card__media">
-                        <span class="product-card__badge">Sample</span>
-                        <img src="{% static 'images/product-leather-sofa.jpg' %}" width="900" height="900" loading="lazy"
-                             alt="Cognac leather sofa with deep button tufting and wooden legs">
-                    </a>
-                    <div class="product-card__body">
-                        <p class="product-card__category">Living Room &middot; Sofas</p>
-                        <h3 class="product-card__name"><a href="#">Tufted Leather Sofa</a></h3>
-                        <p class="product-card__price">Price coming soon</p>
-                        <a href="#" class="text-link text-link--small" aria-label="View details: Tufted Leather Sofa">View details <span aria-hidden="true">&rarr;</span></a>
-                    </div>
-                </article>
-            </li>
-            <li>
-                <article class="product-card">
-                    <a href="#" class="product-card__media">
-                        <span class="product-card__badge">Sample</span>
-                        <img src="{% static 'images/product-boucle-chair.jpg' %}" width="900" height="1125" loading="lazy"
-                             alt="Rounded cream bouclé lounge chair on a low metal base">
-                    </a>
-                    <div class="product-card__body">
-                        <p class="product-card__category">Living Room &middot; Chairs</p>
-                        <h3 class="product-card__name"><a href="#">Rounded Bouclé Lounge Chair</a></h3>
-                        <p class="product-card__price">Price coming soon</p>
-                        <a href="#" class="text-link text-link--small" aria-label="View details: Rounded Bouclé Lounge Chair">View details <span aria-hidden="true">&rarr;</span></a>
-                    </div>
-                </article>
-            </li>
-            <li>
-                <article class="product-card">
-                    <a href="#" class="product-card__media">
-                        <span class="product-card__badge">Sample</span>
-                        <img src="{% static 'images/product-tufted-chair.jpg' %}" width="900" height="720" loading="lazy"
-                             alt="Ivory button-tufted accent chair with turned white legs">
-                    </a>
-                    <div class="product-card__body">
-                        <p class="product-card__category">Bedroom &middot; Accent Chairs</p>
-                        <h3 class="product-card__name"><a href="#">Tufted Accent Chair</a></h3>
-                        <p class="product-card__price">Price coming soon</p>
-                        <a href="#" class="text-link text-link--small" aria-label="View details: Tufted Accent Chair">View details <span aria-hidden="true">&rarr;</span></a>
-                    </div>
-                </article>
-            </li>
+            {% for product in featured_products %}
+                <li>{% include "includes/product_card.html" %}</li>
+            {% empty %}
+                <li class="product-grid__empty">New pieces are on their way. <a href="{% url 'collection' %}" class="text-link">Browse the collection</a></li>
+            {% endfor %}
         </ul>
     </div>
 </section>
@@ -231,7 +174,7 @@
             <p class="eyebrow eyebrow--light">Begin with one piece</p>
             <h2 id="cta-heading" class="cta-panel__title">Your Next Favourite Space Starts Here.</h2>
             <p class="cta-panel__text">Explore furniture and find pieces that feel right for your home.</p>
-            <a href="#categories" class="button button--light">Explore Furniture</a>
+            <a href="{% url 'collection' %}" class="button button--light">Explore Furniture</a>
         </div>
     </div>
 </section>

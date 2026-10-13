@@ -71,6 +71,17 @@ Not used: ambo-ampeng, inside-weather, sven-brandsma, virender-singh (style or c
 
 **Homepage featured cards** are still hard-coded in `home.html`. Next step: render them from `Product` using `includes/product_card.html`.
 
+## Update 2026-10-13: collection page, new images, prices
+
+- **New images** (10 Pexels photos): bedroom suite → Bedroom category card; terrace banquette → Outdoor category card. The typographic "Photography coming soon" cards and their CSS were removed.
+- **Collection page** `/collection/` (`views.collection`, `templates/collection.html`): every active product with image, room · type, name, description and price. Room filter chips use `?room=<code>`; unknown values fall back to all rooms; an empty room shows a message.
+- **Links to the collection:** category cards (filtered by room), "View all categories", the "Explore Furniture" button, footer Rooms links, navbar and footer **Shop**. **Categories** now jumps to the homepage room cards (`/#categories`).
+- **Products:** migration `0004` adds 13 products (the 8 remaining new photos plus one per room from the category photos) and gives all 17 a price. Product images are pre-cropped to 5:4 around the furniture (`static/images/product-*.jpg`).
+- **Prices are placeholders** requested by the owner ("random prices from 100k UGX"), from UGX 185,000 to UGX 6,500,000. Edit them in the admin (the price is editable directly in the product list) before launch.
+- **Homepage "Pieces You'll Love"** now renders products with the new `is_featured` flag (max 4) from the database through `includes/product_card.html`. The "Sample" badges and the "catalogue being prepared" note were removed now that prices are shown.
+- **"View details"** links go to the product on the collection page (`/collection/?room=…#slug`), which highlights it. There is no separate product detail page.
+- **Tests:** 15, all passing.
+
 ## Open items
 
 1. **Security:** `.env` is tracked in git (the `.gitignore` is inside `furniture_site/`, so it does not apply at the project root). Move `.gitignore` to the project root, untrack `.env`, and rotate any credentials it contained if it was ever pushed.

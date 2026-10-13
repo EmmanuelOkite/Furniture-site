@@ -687,37 +687,6 @@ address {
     transform: translateX(4px);
 }
 
-/* Typographic cards for rooms that do not have photography yet. */
-.category-card--pending .category-card__link {
-    background: var(--sand);
-    border: 1px solid var(--line);
-    color: var(--charcoal);
-    transition: background-color var(--duration) var(--ease);
-}
-
-.category-card--pending .category-card__link::after {
-    content: none;
-}
-
-.category-card--pending .category-card__link:hover {
-    background: var(--beige);
-}
-
-.category-card__note {
-    width: 100%;
-    margin-bottom: auto;
-    color: var(--walnut);
-    font-size: .75rem;
-    font-weight: 500;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-}
-
-.category-card--pending .category-card__body {
-    height: 100%;
-    align-content: space-between;
-}
-
 
 /* 8. Featured pieces
    ========================================================================== */
@@ -749,25 +718,9 @@ address {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 50% var(--focus-y, 50%);
     /* Blends the white studio backdrops into the warm card tone. */
     mix-blend-mode: multiply;
     transition: transform 600ms var(--ease);
-}
-
-.product-card__badge {
-    position: absolute;
-    top: 14px;
-    left: 14px;
-    z-index: 1;
-    padding: 5px 10px;
-    border-radius: 2px;
-    background: var(--ivory);
-    color: var(--walnut);
-    font-size: .6875rem;
-    font-weight: 500;
-    letter-spacing: .14em;
-    text-transform: uppercase;
 }
 
 .product-card__body {
@@ -795,10 +748,30 @@ address {
     line-height: 1.2;
 }
 
-.product-card__price {
-    margin-bottom: 22px;
+.product-card__description {
+    margin-bottom: 14px;
     color: var(--text-muted);
     font-size: .9375rem;
+    line-height: 1.55;
+}
+
+.product-card__price {
+    margin-bottom: 22px;
+    color: var(--forest);
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: .02em;
+}
+
+.product-card--detailed .product-card__price {
+    margin-top: auto;
+    margin-bottom: 0;
+}
+
+/* Highlights the card a "View details" link jumped to. */
+.product-card--detailed:target {
+    outline: 2px solid var(--forest);
+    outline-offset: 4px;
 }
 
 .product-card .text-link {
@@ -1003,6 +976,63 @@ address {
 .search-empty p {
     margin-bottom: 28px;
     color: var(--text-muted);
+}
+
+/* Collection page */
+
+.collection-page__header {
+    max-width: 46rem;
+    margin-bottom: 36px;
+}
+
+.collection-page__intro {
+    margin-top: 20px;
+    color: var(--text-muted);
+    font-size: 1.125rem;
+}
+
+.room-filter ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.room-filter__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 20px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: .9375rem;
+    transition: background-color var(--duration) var(--ease),
+                border-color var(--duration) var(--ease),
+                color var(--duration) var(--ease);
+}
+
+.room-filter__link:hover {
+    border-color: var(--charcoal);
+}
+
+.room-filter__link[aria-current="page"] {
+    border-color: var(--forest);
+    background: var(--forest);
+    color: var(--ivory);
+}
+
+.collection-page__count {
+    margin: 28px 0 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    color: var(--text-muted);
+}
+
+.product-grid--collection {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.collection-page .product-card {
+    border: 1px solid var(--line);
 }
 
 .pagination {
@@ -1217,7 +1247,7 @@ address {
 
     .category-grid {
         grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(2, clamp(220px, 34vw, 300px)) clamp(180px, 26vw, 220px);
+        grid-template-rows: repeat(3, clamp(220px, 34vw, 300px));
         grid-template-areas:
             "living  dining"
             "living  office"
@@ -1273,11 +1303,6 @@ address {
     .category-card__link {
         height: auto;
         aspect-ratio: 4 / 3;
-    }
-
-    .category-card--pending .category-card__link {
-        aspect-ratio: auto;
-        min-height: 150px;
     }
 
     .category-card__body {

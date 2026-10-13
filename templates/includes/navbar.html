@@ -10,8 +10,8 @@
         <nav class="main-nav" id="main-nav" aria-label="Main navigation" data-main-nav>
             <ul class="main-nav__list">
                 <li><a href="{% url 'home' %}" class="main-nav__link"{% if current == 'home' %} aria-current="page"{% endif %}>Home</a></li>
-                <li><a href="#" class="main-nav__link">Shop</a></li>
-                <li><a href="#" class="main-nav__link">Categories</a></li>
+                <li><a href="{% url 'collection' %}" class="main-nav__link"{% if current == 'collection' %} aria-current="page"{% endif %}>Shop</a></li>
+                <li><a href="{% url 'home' %}#categories" class="main-nav__link">Categories</a></li>
                 <li><a href="#" class="main-nav__link">About Us</a></li>
                 <li><a href="#" class="main-nav__link">Contact</a></li>
                 <li class="main-nav__item--mobile"><a href="#" class="main-nav__link">My Account</a></li>

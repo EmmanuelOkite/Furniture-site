@@ -30,8 +30,8 @@
             <h2 class="site-footer__heading" id="footer-quick-links">Explore</h2>
             <ul>
                 <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="#">Shop</a></li>
-                <li><a href="#">Categories</a></li>
+                <li><a href="{% url 'collection' %}">Shop</a></li>
+                <li><a href="{% url 'home' %}#categories">Categories</a></li>
                 <li><a href="#">About Us</a></li>
                 <li><a href="#">Contact</a></li>
             </ul>
@@ -40,11 +40,11 @@
         <nav class="site-footer__col" aria-labelledby="footer-categories">
             <h2 class="site-footer__heading" id="footer-categories">Rooms</h2>
             <ul>
-                <li><a href="#">Living Room</a></li>
-                <li><a href="#">Bedroom</a></li>
-                <li><a href="#">Dining Room</a></li>
-                <li><a href="#">Office Furniture</a></li>
-                <li><a href="#">Outdoor Furniture</a></li>
+                <li><a href="{% url 'collection' %}?room=living-room">Living Room</a></li>
+                <li><a href="{% url 'collection' %}?room=bedroom">Bedroom</a></li>
+                <li><a href="{% url 'collection' %}?room=dining-room">Dining Room</a></li>
+                <li><a href="{% url 'collection' %}?room=office">Office Furniture</a></li>
+                <li><a href="{% url 'collection' %}?room=outdoor">Outdoor Furniture</a></li>
             </ul>
         </nav>
 

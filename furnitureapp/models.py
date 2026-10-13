@@ -45,6 +45,10 @@ class Product(models.Model):
         default=True,
         help_text="Inactive products are hidden from the site and search.",
     )
+    is_featured = models.BooleanField(
+        default=False,
+        help_text="Featured products appear in “Pieces You’ll Love” on the homepage.",
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

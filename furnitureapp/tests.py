@@ -65,6 +65,59 @@ class SearchTests(TestCase):
         self.assertContains(response, "What are you looking for?")
         self.assertNotContains(response, "Nothing matched")
 
+    def test_price_is_shown_in_ugx(self):
+        self.sofa.price = 2450000
+        self.sofa.save()
+        response = self.client.get(reverse("search"), {"q": "velvet"})
+        self.assertContains(response, "UGX 2,450,000")
+
     def test_query_is_escaped(self):
         response = self.client.get(reverse("search"), {"q": "<script>alert(1)</script>"})
         self.assertNotContains(response, "<script>alert(1)</script>")
+
+
+@override_settings(STORAGES=PLAIN_STATIC_STORAGE)
+class CollectionAndHomeTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        Product.objects.all().delete()
+        cls.bed = Product.objects.create(
+            name="Oak Bed Frame", slug="oak-bed-frame", room=Product.Room.BEDROOM,
+            product_type="Beds", description="Solid oak.", price=1500000, is_featured=True,
+        )
+        cls.table = Product.objects.create(
+            name="Round Table", slug="round-table", room=Product.Room.DINING_ROOM,
+            product_type="Tables", price=900000,
+        )
+        cls.hidden = Product.objects.create(
+            name="Hidden Chair", slug="hidden-chair", room=Product.Room.BEDROOM,
+            product_type="Chairs", is_active=False,
+        )
+
+    def test_collection_lists_all_active_products(self):
+        response = self.client.get(reverse("collection"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Oak Bed Frame")
+        self.assertContains(response, "Round Table")
+        self.assertNotContains(response, "Hidden Chair")
+        self.assertContains(response, "Solid oak.")  # details are shown
+
+    def test_collection_filters_by_room(self):
+        response = self.client.get(reverse("collection"), {"room": "bedroom"})
+        self.assertContains(response, "Oak Bed Frame")
+        self.assertNotContains(response, "Round Table")
+
+    def test_unknown_room_shows_everything(self):
+        response = self.client.get(reverse("collection"), {"room": "garage"})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Round Table")
+
+    def test_empty_room_shows_message(self):
+        response = self.client.get(reverse("collection"), {"room": "outdoor"})
+        self.assertContains(response, "Nothing here yet")
+
+    def test_home_shows_only_featured_products(self):
+        response = self.client.get(reverse("home"))
+        self.assertContains(response, "Oak Bed Frame")
+        self.assertContains(response, "UGX 1,500,000")
+        self.assertNotContains(response, "Round Table")

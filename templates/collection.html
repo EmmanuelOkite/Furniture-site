@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}{% if current_room_label %}{{ current_room_label }} | {% endif %}The Collection | Sam's Stunning Furniture{% endblock %}
+
+{% block meta_description %}Browse sofas, chairs, dining sets, bedroom and outdoor furniture from Sam's Stunning Furniture, Kyanja, Kampala.{% endblock %}
+
+{% block content %}
+<section class="section collection-page" aria-labelledby="collection-heading">
+    <div class="container">
+        <header class="collection-page__header">
+            <p class="eyebrow">The collection</p>
+            <h1 id="collection-heading" class="section-title">
+                {% if current_room_label %}{{ current_room_label }}{% else %}Every Piece, Every Room{% endif %}
+            </h1>
+            <p class="collection-page__intro">
+                Browse our furniture by room. Prices are in Ugandan shillings; call us to check availability.
+            </p>
+        </header>
+
+        <nav class="room-filter" aria-label="Filter by room">
+            <ul>
+                <li>
+                    <a href="{% url 'collection' %}" class="room-filter__link"{% if not current_room %} aria-current="page"{% endif %}>All rooms</a>
+                </li>
+                {% for value, label in rooms %}
+                    <li>
+                        <a href="{% url 'collection' %}?room={{ value }}" class="room-filter__link"{% if value == current_room %} aria-current="page"{% endif %}>{{ label }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </nav>
+
+        <p class="collection-page__count" role="status">
+            {{ page_obj.paginator.count }} piece{{ page_obj.paginator.count|pluralize }}
+        </p>
+
+        {% if page_obj.paginator.count %}
+            <ul class="product-grid product-grid--collection">
+                {% for product in page_obj %}
+                    <li>{% include "includes/product_card.html" with detailed=True %}</li>
+                {% endfor %}
+            </ul>
+
+            {% if page_obj.has_other_pages %}
+                <nav class="pagination" aria-label="Collection pages">
+                    {% if page_obj.has_previous %}
+                        <a class="text-link" href="?{% if current_room %}room={{ current_room }}&amp;{% endif %}page={{ page_obj.previous_page_number }}"><span aria-hidden="true">&larr;</span> Previous</a>
+                    {% endif %}
+                    <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                    {% if page_obj.has_next %}
+                        <a class="text-link" href="?{% if current_room %}room={{ current_room }}&amp;{% endif %}page={{ page_obj.next_page_number }}">Next <span aria-hidden="true">&rarr;</span></a>
+                    {% endif %}
+                </nav>
+            {% endif %}
+        {% else %}
+            <div class="search-empty">
+                <h2 class="search-empty__title">Nothing here yet</h2>
+                <p>We&rsquo;re adding more pieces for this room soon. In the meantime, explore the rest of the collection.</p>
+                <a href="{% url 'collection' %}" class="button button--outline">See all rooms</a>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

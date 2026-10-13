@@ -1,19 +1,38 @@
 {% load static %}
-<article class="product-card">
-    <a href="#" class="product-card__media">
-        {% if product.is_sample %}<span class="product-card__badge">Sample</span>{% endif %}
+{% comment %}
+    One product card. Options:
+      detailed=True  shows the description and drops the "View details" link (used on the collection page).
+{% endcomment %}
+{% url 'collection' as collection_url %}
+{% with details_url=collection_url|add:"?room="|add:product.room|add:"#"|add:product.slug %}
+<article class="product-card{% if detailed %} product-card--detailed{% endif %}"{% if detailed %} id="{{ product.slug }}"{% endif %}>
+    {% if detailed %}
+        <div class="product-card__media">
+    {% else %}
+        <a href="{{ details_url }}" class="product-card__media" tabindex="-1" aria-hidden="true">
+    {% endif %}
         {% if product.image %}
-            <img src="{% static product.image %}" alt="{{ product.image_alt|default:product.name }}" loading="lazy">
+            <img src="{% static product.image %}" width="900" height="720"
+                 alt="{% if detailed %}{{ product.image_alt|default:product.name }}{% endif %}" loading="lazy">
         {% else %}
             <span class="product-card__no-image">Image coming soon</span>
         {% endif %}
-    </a>
+    {% if detailed %}</div>{% else %}</a>{% endif %}
+
     <div class="product-card__body">
         <p class="product-card__category">{{ product.get_room_display }} &middot; {{ product.product_type }}</p>
-        <h3 class="product-card__name"><a href="#">{{ product.name }}</a></h3>
+        <h3 class="product-card__name">
+            {% if detailed %}{{ product.name }}{% else %}<a href="{{ details_url }}">{{ product.name }}</a>{% endif %}
+        </h3>
+        {% if detailed and product.description %}
+            <p class="product-card__description">{{ product.description }}</p>
+        {% endif %}
         <p class="product-card__price">
-            {% if product.price is not None %}{{ product.price|floatformat:"0g" }}{% else %}Price coming soon{% endif %}
+            {% if product.price is not None %}UGX {{ product.price|floatformat:"0g" }}{% else %}Price on request{% endif %}
         </p>
-        <a href="#" class="text-link text-link--small" aria-label="View details: {{ product.name }}">View details <span aria-hidden="true">&rarr;</span></a>
+        {% if not detailed %}
+            <a href="{{ details_url }}" class="text-link text-link--small">View details<span class="visually-hidden">: {{ product.name }}</span> <span aria-hidden="true">&rarr;</span></a>
+        {% endif %}
     </div>
 </article>
+{% endwith %}

@@ -31,4 +31,12 @@ ROOM_PAGES = {
         "banner": "images/dining-banner.jpg",
         "banner_alt": "Ivory sideboard with white vases and a bronze lamp against a charcoal wall beside a dining table",
     },
+    "office": {
+        "url_name": "office",
+        "title": "Office Furniture",
+        "intro": "Desks, meeting tables and chairs for home offices and workplaces that work as hard as you do.",
+        "meta_description": "Office desks, boardroom tables and office chairs from Sam's Stunning Furniture, Kyanja, Kampala.",
+        "banner": "images/office-banner.jpg",
+        "banner_alt": "Oak boardroom table with black leather office chairs in a grey meeting room",
+    },
 }

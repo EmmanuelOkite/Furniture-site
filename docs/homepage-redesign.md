@@ -106,6 +106,13 @@ Not used: ambo-ampeng, inside-weather, sven-brandsma, virender-singh (style or c
 - Room banner text got a soft text-shadow so it stays legible over lighter furniture in the photo.
 - **Tests:** 23, all passing. The collection-filter tests now use Office, the remaining room without its own page.
 
+## Update 2026-10-14: Office Furniture page
+
+- **Office page** `/office/`: a fourth entry in `furnitureapp/rooms.py`, plus one `path()`. Migration `0008` adds 10 office pieces (`static/images/office-*.jpg`), priced UGX 650,000 to 6,200,000 (placeholders). The page shows all 12 office pieces, newest first.
+- **Photo left out:** `pexels-ziamoshtaghi-18787913.jpg` (boardroom with a large emblem flag and framed certificates). It reads as a specific organisation's office rather than furniture, and no 5:4 crop removes the flag.
+- **Links:** the homepage Office card, footer Office Furniture, and the Office filter button go to `/office/`. `/collection/?room=office` redirects there. Outdoor is now the only room on the collection filter.
+- **Tests:** 24, all passing. The collection-filter tests now use Outdoor.
+
 ## Open items
 
 1. **Security:** `.env` is tracked in git (the `.gitignore` is inside `furniture_site/`, so it does not apply at the project root). Move `.gitignore` to the project root, untrack `.env`, and rotate any credentials it contained if it was ever pushed.

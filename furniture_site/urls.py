@@ -26,5 +26,6 @@ urlpatterns = [
     path('living-room/', views.room_page, {'room': 'living-room'}, name='living_room'),
     path('bedroom/', views.room_page, {'room': 'bedroom'}, name='bedroom'),
     path('dining-room/', views.room_page, {'room': 'dining-room'}, name='dining_room'),
+    path('office/', views.room_page, {'room': 'office'}, name='office'),
     path('search/', views.search, name='search'),
 ]

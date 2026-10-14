@@ -1009,6 +1009,8 @@ address {
 
 .room-banner__inner {
     padding-block: clamp(40px, 6vw, 72px);
+    /* Keeps the text legible where it crosses lighter furniture in the photo. */
+    text-shadow: 0 1px 14px rgba(20, 22, 19, .55);
 }
 
 .room-banner__title {

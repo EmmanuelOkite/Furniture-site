@@ -23,4 +23,12 @@ ROOM_PAGES = {
         "banner": "images/bedroom-banner.jpg",
         "banner_alt": "Charcoal upholstered headboard against a slatted timber wall lit by amber pendant lamps",
     },
+    "dining-room": {
+        "url_name": "dining_room",
+        "title": "Dining Room",
+        "intro": "Dining tables, chairs and sideboards for everyday meals and long evenings with family.",
+        "meta_description": "Dining sets, tables, chairs and sideboards from Sam's Stunning Furniture, Kyanja, Kampala.",
+        "banner": "images/dining-banner.jpg",
+        "banner_alt": "Ivory sideboard with white vases and a bronze lamp against a charcoal wall beside a dining table",
+    },
 }

@@ -99,6 +99,13 @@ Not used: ambo-ampeng, inside-weather, sven-brandsma, virender-singh (style or c
 - **Links:** the homepage Bedroom card, footer Bedroom, and the Bedroom room filter button now go to `/bedroom/`. `/collection/?room=bedroom` redirects (302) there.
 - **Tests:** 22, all passing.
 
+## Update 2026-10-14: Dining Room page
+
+- **Dining Room page** `/dining-room/`: added as a third entry in `furnitureapp/rooms.py`, plus one `path()`. No new view or template. Migration `0007` adds 10 dining pieces (`static/images/dining-*.jpg`), priced UGX 1,650,000 to 8,200,000 (placeholders). The page shows all 14 dining pieces, newest first.
+- **Links:** the homepage Dining Room card, footer Dining Room, and the Dining Room filter button go to `/dining-room/`. `/collection/?room=dining-room` redirects there. Office and Outdoor still use the collection filter.
+- Room banner text got a soft text-shadow so it stays legible over lighter furniture in the photo.
+- **Tests:** 23, all passing. The collection-filter tests now use Office, the remaining room without its own page.
+
 ## Open items
 
 1. **Security:** `.env` is tracked in git (the `.gitignore` is inside `furniture_site/`, so it does not apply at the project root). Move `.gitignore` to the project root, untrack `.env`, and rotate any credentials it contained if it was ever pushed.

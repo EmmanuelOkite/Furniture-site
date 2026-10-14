@@ -103,8 +103,12 @@ class CollectionAndHomeTests(TestCase):
         self.assertContains(response, "Solid oak.")  # details are shown
 
     def test_collection_filters_by_room(self):
-        response = self.client.get(reverse("collection"), {"room": "dining-room"})
-        self.assertContains(response, "Round Table")
+        Product.objects.create(
+            name="Trestle Desk", slug="trestle-desk", room=Product.Room.OFFICE, product_type="Desks",
+        )
+        response = self.client.get(reverse("collection"), {"room": "office"})
+        self.assertContains(response, "Trestle Desk")
+        self.assertNotContains(response, "Round Table")
         self.assertNotContains(response, "Oak Bed Frame")
 
     def test_unknown_room_shows_everything(self):
@@ -160,7 +164,26 @@ class LivingRoomPageTests(TestCase):
         self.assertEqual(self.sofa.get_absolute_url(), "/living-room/#blue-velvet-sofa")
         self.assertEqual(self.bed.get_absolute_url(), "/bedroom/#oak-bed-frame")
         table = Product(name="Table", slug="table", room=Product.Room.DINING_ROOM)
-        self.assertEqual(table.get_absolute_url(), "/collection/?room=dining-room#table")
+        self.assertEqual(table.get_absolute_url(), "/dining-room/#table")
+        desk = Product(name="Desk", slug="desk", room=Product.Room.OFFICE)
+        self.assertEqual(desk.get_absolute_url(), "/collection/?room=office#desk")
+
+    def test_dining_room_page_and_links(self):
+        Product.objects.create(
+            name="Teak Dining Set", slug="teak-dining-set", room=Product.Room.DINING_ROOM,
+            product_type="Dining Sets", price=3200000,
+        )
+        url = reverse("dining_room")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Dining Room</h1>")
+        self.assertContains(response, "Teak Dining Set")
+        self.assertContains(response, "UGX 3,200,000")
+        self.assertNotContains(response, "Oak Bed Frame")
+        self.assertRedirects(self.client.get(reverse("collection"), {"room": "dining-room"}), url)
+        home = self.client.get(reverse("home")).content.decode()
+        self.assertIn(f'href="{url}" class="category-card__link"', home)
+        self.assertIn(f'<a href="{url}">Dining Room</a>', home)
 
     def test_bedroom_page_lists_only_bedroom_pieces_with_prices(self):
         response = self.client.get(reverse("bedroom"))

@@ -39,4 +39,12 @@ ROOM_PAGES = {
         "banner": "images/office-banner.jpg",
         "banner_alt": "Oak boardroom table with black leather office chairs in a grey meeting room",
     },
+    "outdoor": {
+        "url_name": "outdoor",
+        "title": "Outdoor Furniture",
+        "intro": "Garden, patio and terrace furniture for long sunny afternoons outdoors.",
+        "meta_description": "Garden, patio and terrace furniture from Sam's Stunning Furniture, Kyanja, Kampala.",
+        "banner": "images/outdoor-banner.jpg",
+        "banner_alt": "Rattan egg chairs, sofa and round coffee table with cream cushions on a planted patio",
+    },
 }

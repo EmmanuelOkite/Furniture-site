@@ -113,6 +113,14 @@ Not used: ambo-ampeng, inside-weather, sven-brandsma, virender-singh (style or c
 - **Links:** the homepage Office card, footer Office Furniture, and the Office filter button go to `/office/`. `/collection/?room=office` redirects there. Outdoor is now the only room on the collection filter.
 - **Tests:** 24, all passing. The collection-filter tests now use Outdoor.
 
+## Update 2026-10-14: Outdoor Furniture page (all rooms now have pages)
+
+- **Outdoor page** `/outdoor/`: a fifth entry in `furnitureapp/rooms.py`, plus one `path()`. Migration `0009` adds 10 outdoor pieces (`static/images/outdoor-*.jpg`), priced UGX 180,000 to 4,200,000 (placeholders). The page shows all 11 outdoor pieces, newest first.
+- **All five rooms now have their own page:** `/living-room/`, `/bedroom/`, `/dining-room/`, `/office/`, `/outdoor/`. Every homepage category card, footer Rooms link and room filter button points to them.
+- **`/collection/`** still lists every product ("All rooms"). Any `?room=` link to it now redirects to that room's page. The collection-filter fallback in `Product.room_url()` stays in place for any room added to `Product.Room` later without a page.
+- **Tests:** 25, all passing, including one that checks every room's old `?room=` link redirects to its page.
+- **Catalogue:** 65 products: Living Room 17, Dining Room 14, Office 12, Bedroom 11, Outdoor 11. Every price is a placeholder to be replaced in the admin before launch.
+
 ## Open items
 
 1. **Security:** `.env` is tracked in git (the `.gitignore` is inside `furniture_site/`, so it does not apply at the project root). Move `.gitignore` to the project root, untrack `.env`, and rotate any credentials it contained if it was ever pushed.

@@ -102,14 +102,11 @@ class CollectionAndHomeTests(TestCase):
         self.assertNotContains(response, "Hidden Chair")
         self.assertContains(response, "Solid oak.")  # details are shown
 
-    def test_collection_filters_by_room(self):
-        Product.objects.create(
-            name="Patio Bench", slug="patio-bench", room=Product.Room.OUTDOOR, product_type="Outdoor Seating",
-        )
-        response = self.client.get(reverse("collection"), {"room": "outdoor"})
-        self.assertContains(response, "Patio Bench")
-        self.assertNotContains(response, "Round Table")
-        self.assertNotContains(response, "Oak Bed Frame")
+    def test_every_room_filter_redirects_to_its_page(self):
+        # Every room now has its own page; old ?room= links must still land somewhere useful.
+        for room in Product.Room.values:
+            response = self.client.get(reverse("collection"), {"room": room})
+            self.assertRedirects(response, Product.room_url(room), fetch_redirect_response=False)
 
     def test_unknown_room_shows_everything(self):
         response = self.client.get(reverse("collection"), {"room": "garage"})
@@ -117,7 +114,7 @@ class CollectionAndHomeTests(TestCase):
         self.assertContains(response, "Round Table")
 
     def test_empty_room_shows_message(self):
-        response = self.client.get(reverse("collection"), {"room": "outdoor"})
+        response = self.client.get(reverse("outdoor"))
         self.assertContains(response, "Nothing here yet")
 
     def test_home_shows_only_featured_products(self):
@@ -168,7 +165,23 @@ class LivingRoomPageTests(TestCase):
         desk = Product(name="Desk", slug="desk", room=Product.Room.OFFICE)
         self.assertEqual(desk.get_absolute_url(), "/office/#desk")
         bench = Product(name="Bench", slug="bench", room=Product.Room.OUTDOOR)
-        self.assertEqual(bench.get_absolute_url(), "/collection/?room=outdoor#bench")
+        self.assertEqual(bench.get_absolute_url(), "/outdoor/#bench")
+
+    def test_outdoor_page_and_links(self):
+        Product.objects.create(
+            name="Rattan Patio Set", slug="rattan-patio-set", room=Product.Room.OUTDOOR,
+            product_type="Outdoor Dining", price=1850000,
+        )
+        url = reverse("outdoor")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Outdoor Furniture</h1>")
+        self.assertContains(response, "Rattan Patio Set")
+        self.assertContains(response, "UGX 1,850,000")
+        self.assertNotContains(response, "Oak Bed Frame")
+        home = self.client.get(reverse("home")).content.decode()
+        self.assertIn(f'href="{url}" class="category-card__link"', home)
+        self.assertIn(f'<a href="{url}">Outdoor Furniture</a>', home)
 
     def test_office_page_and_links(self):
         Product.objects.create(

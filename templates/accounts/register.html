@@ -1,0 +1,22 @@
+{% extends "accounts/base.html" %}
+
+{% block page_title %}Create your account{% endblock %}
+
+{% block account_content %}
+<div class="auth-card">
+    <h1 class="auth-card__title">Create your account</h1>
+    <p class="auth-card__intro">Save your favourite pieces and manage your details.</p>
+    {% include "accounts/includes/form_errors.html" %}
+    <form method="post" class="account-form" data-account-form>
+        {% csrf_token %}
+            {% include "accounts/includes/field.html" with field=form.first_name %}
+            {% include "accounts/includes/field.html" with field=form.last_name %}
+            {% include "accounts/includes/field.html" with field=form.email %}
+            {% include "accounts/includes/field.html" with field=form.phone_number %}
+            {% include "accounts/includes/field.html" with field=form.password1 %}
+            {% include "accounts/includes/field.html" with field=form.password2 %}
+        <button type="submit" class="button button--primary button--block" data-loading-text="Creating account…">Create account</button>
+    </form>
+    <p class="auth-card__footer">Already have an account? <a href="{% url 'accounts:login' %}">Sign in</a></p>
+</div>
+{% endblock %}

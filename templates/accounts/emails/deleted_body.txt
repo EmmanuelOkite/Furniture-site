@@ -1,0 +1,6 @@
+{% autoescape off %}Hello {{ user.first_name }},
+
+Your {{ site_name }} account and personal data have been deleted, as you requested.
+
+If you didn’t do this, please contact us.
+{% endautoescape %}

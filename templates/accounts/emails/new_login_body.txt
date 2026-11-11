@@ -1,0 +1,9 @@
+{% autoescape off %}Hello {{ user.first_name }},
+
+Your account was just signed in to from a network we haven’t seen recently.
+
+Time: {{ when|date:"j F Y, H:i T" }}
+IP address: {{ ip|default:"unknown" }}
+
+If this was you, there’s nothing to do. If not, change your password now and sign out other sessions on your Security page: {{ site_url }}accounts/security/
+{% endautoescape %}

@@ -14,6 +14,7 @@
    11. Footer
    12. Responsive
    13. Reduced motion
+   14. Notification messages
    ========================================================================== */
 
 
@@ -1445,4 +1446,60 @@ address {
         transition-duration: 1ms !important;
         animation-duration: 1ms !important;
     }
+}
+
+
+/* 14. Notification messages
+   ========================================================================== */
+
+.site-messages {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 60;
+    display: grid;
+    gap: 10px;
+    width: min(420px, calc(100% - 32px));
+}
+
+.site-message {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 12px 14px 18px;
+    background: var(--ivory-soft);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--forest);
+    border-radius: var(--radius);
+    box-shadow: 0 10px 30px rgba(28, 33, 29, .14);
+}
+
+.site-message p {
+    flex: 1;
+}
+
+.site-message--error {
+    border-left-color: #9b2c2c;
+}
+
+.site-message--warning {
+    border-left-color: #8a5a12;
+}
+
+.site-message__close {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+.site-message__close svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
 }

@@ -1,0 +1,14 @@
+{% extends "accounts/base.html" %}
+
+{% block page_title %}Reactivate your account{% endblock %}
+
+{% block account_content %}
+<div class="auth-card">
+    <h1 class="auth-card__title">Reactivate your account</h1>
+    <p>Press the button to turn your account back on. You can then sign in as usual.</p>
+    <form method="post" class="account-form" data-account-form>
+        {% csrf_token %}
+        <button type="submit" class="button button--primary button--block" data-loading-text="Reactivating…">Reactivate my account</button>
+    </form>
+</div>
+{% endblock %}

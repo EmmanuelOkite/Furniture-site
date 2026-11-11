@@ -1,0 +1,18 @@
+{% with current=request.resolver_match.url_name %}
+<header class="account-header">
+    <div>
+        <p class="eyebrow">My account</p>
+        <h1 class="section-title" id="account-heading">{{ heading }}{% if greet_name %} {{ greet_name }}{% endif %}</h1>
+    </div>
+    <form method="post" action="{% url 'accounts:logout' %}" class="account-header__signout">
+        {% csrf_token %}
+        <button type="submit" class="button button--outline button--small">Sign out</button>
+    </form>
+</header>
+<nav class="account-tabs" aria-label="Account sections">
+    <a href="{% url 'accounts:profile' %}" class="account-tabs__link"{% if current == 'profile' %} aria-current="page"{% endif %}>Profile</a>
+    <a href="{% url 'accounts:password_change' %}" class="account-tabs__link"{% if current == 'password_change' %} aria-current="page"{% endif %}>Password</a>
+    <a href="{% url 'accounts:security' %}" class="account-tabs__link"{% if current == 'security' %} aria-current="page"{% endif %}>Security</a>
+    {% if user.is_staff %}<a href="{% url 'admin:index' %}" class="account-tabs__link">Admin</a>{% endif %}
+</nav>
+{% endwith %}

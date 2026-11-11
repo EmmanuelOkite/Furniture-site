@@ -1,0 +1,18 @@
+{% extends "accounts/base.html" %}
+
+{% block page_title %}Deactivate account{% endblock %}
+
+{% block account_content %}
+{% include "accounts/includes/account_nav.html" with heading="Deactivate account" %}
+<div class="account-panel account-panel--danger">
+    <h2 class="account-panel__title">Deactivate your account</h2>
+    <p class="account-panel__intro">You’ll be signed out everywhere and won’t be able to sign in until you reactivate your account using a link we email you. Your data is kept.</p>
+    {% include "accounts/includes/form_errors.html" %}
+    <form method="post" class="account-form" data-account-form>
+        {% csrf_token %}
+            {% include "accounts/includes/field.html" with field=form.password %}
+        <button type="submit" class="button button--primary button--block" data-loading-text="Deactivating…">Deactivate my account</button>
+    </form>
+    <p class="account-panel__note"><a href="{% url 'accounts:security' %}">Cancel</a></p>
+</div>
+{% endblock %}

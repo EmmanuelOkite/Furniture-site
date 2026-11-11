@@ -1,0 +1,19 @@
+{% extends "accounts/base.html" %}
+
+{% block page_title %}Delete account{% endblock %}
+
+{% block account_content %}
+{% include "accounts/includes/account_nav.html" with heading="Delete account" %}
+<div class="account-panel account-panel--danger">
+    <h2 class="account-panel__title">Permanently delete your account</h2>
+    <p class="account-panel__intro">This deletes your account, sign-in history and security settings. It can’t be undone.</p>
+    {% include "accounts/includes/form_errors.html" %}
+    <form method="post" class="account-form" data-account-form>
+        {% csrf_token %}
+            {% include "accounts/includes/field.html" with field=form.password %}
+            {% include "accounts/includes/field.html" with field=form.confirm %}
+        <button type="submit" class="button button--danger button--block" data-loading-text="Deleting…">Delete my account</button>
+    </form>
+    <p class="account-panel__note"><a href="{% url 'accounts:security' %}">Cancel</a></p>
+</div>
+{% endblock %}

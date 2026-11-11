@@ -1,0 +1,16 @@
+{% extends "accounts/base.html" %}
+
+{% block page_title %}Reactivate your account{% endblock %}
+
+{% block account_content %}
+<div class="auth-card">
+    <h1 class="auth-card__title">Reactivate your account</h1>
+    <p class="auth-card__intro">If you deactivated your account, enter its email address and we’ll send you a link to turn it back on.</p>
+    {% include "accounts/includes/form_errors.html" %}
+    <form method="post" class="account-form" data-account-form>
+        {% csrf_token %}
+            {% include "accounts/includes/field.html" with field=form.email %}
+        <button type="submit" class="button button--primary button--block" data-loading-text="Sending…">Send reactivation link</button>
+    </form>
+</div>
+{% endblock %}

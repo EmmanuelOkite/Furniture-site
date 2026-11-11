@@ -1,0 +1,30 @@
+{% extends "accounts/base.html" %}
+
+{% block page_title %}Profile{% endblock %}
+
+{% block account_content %}
+{% include "accounts/includes/account_nav.html" with heading="Hello," greet_name=user.first_name %}
+<div class="account-grid">
+    <div class="account-panel">
+        <h2 class="account-panel__title">Personal details</h2>
+    {% include "accounts/includes/form_errors.html" %}
+        <form method="post" class="account-form" data-account-form>
+            {% csrf_token %}
+                {% include "accounts/includes/field.html" with field=form.first_name %}
+                {% include "accounts/includes/field.html" with field=form.last_name %}
+                {% include "accounts/includes/field.html" with field=form.phone_number %}
+            <button type="submit" class="button button--primary button--block" data-loading-text="Saving…">Save changes</button>
+        </form>
+    </div>
+    <aside class="account-panel account-panel--muted" aria-labelledby="account-info-heading">
+        <h2 class="account-panel__title" id="account-info-heading">Account information</h2>
+        <dl class="info-list">
+            <div><dt>Email</dt><dd>{{ user.email }}</dd></div>
+            <div><dt>Role</dt><dd>{{ role|default:"—" }}</dd></div>
+            <div><dt>Member since</dt><dd>{{ user.date_joined|date:"j F Y" }}</dd></div>
+            <div><dt>Last sign-in</dt><dd>{{ user.last_login|date:"j M Y, H:i"|default:"—" }}</dd></div>
+        </dl>
+        <p class="account-panel__note">To change your email address or role, please contact us.</p>
+    </aside>
+</div>
+{% endblock %}

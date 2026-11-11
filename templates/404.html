@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Page not found | Sam's Stunning Furniture{% endblock %}
+
+{% block content %}
+<section class="section error-page">
+    <div class="container">
+        <p class="eyebrow">Error 404</p>
+        <h1 class="section-title">We couldn’t find that page</h1>
+        <p>It may have moved, or the link may be mistyped.</p>
+        <p><a href="{% url 'home' %}" class="button button--primary">Back to the shop</a></p>
+    </div>
+</section>
+{% endblock %}

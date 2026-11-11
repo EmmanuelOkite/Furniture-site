@@ -1,0 +1,19 @@
+{% extends "accounts/base.html" %}
+
+{% block page_title %}Backup codes{% endblock %}
+
+{% block account_content %}
+{% include "accounts/includes/account_nav.html" with heading="Two-factor authentication" %}
+<div class="account-panel">
+    {% if just_enabled %}<div class="form-alert form-alert--success" role="status"><p>Two-factor authentication is on.</p></div>{% endif %}
+    <h2 class="account-panel__title">Save your backup codes</h2>
+    <p>If you lose your phone, each code below lets you sign in once. They are shown <strong>only now</strong>: store them somewhere safe, such as a password manager.</p>
+    <ul class="backup-codes">
+        {% for code in codes %}<li><code>{{ code }}</code></li>{% endfor %}
+    </ul>
+    <div class="button-group">
+        <button type="button" class="button button--outline button--small" data-print>Print codes</button>
+        <a href="{% url 'accounts:security' %}" class="button button--primary button--small">I’ve saved them</a>
+    </div>
+</div>
+{% endblock %}

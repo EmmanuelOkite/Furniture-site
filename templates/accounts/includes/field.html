@@ -1,0 +1,33 @@
+{% comment %}
+One form field with label, help text and errors.
+Django adds aria-describedby / aria-invalid to the input, pointing at the
+"<id>_helptext" and "<id>_error" elements below.
+{% endcomment %}
+{% with id=field.auto_id %}
+<div class="form-field{% if field.errors %} form-field--invalid{% endif %}{% if field.field.widget.input_type == 'checkbox' %} form-field--checkbox{% endif %}">
+    {% if field.field.widget.input_type == "checkbox" %}
+        {{ field }}
+        <label for="{{ id }}" class="form-field__label">{{ field.label }}</label>
+    {% else %}
+        <label for="{{ id }}" class="form-field__label">
+            {{ field.label }}{% if not field.field.required %} <span class="form-field__optional">(optional)</span>{% endif %}
+        </label>
+        {% if field.field.widget.input_type == "password" %}
+            <div class="password-input" data-password-input>
+                {{ field }}
+                <button type="button" class="password-input__toggle" data-password-toggle aria-controls="{{ id }}" aria-pressed="false">Show</button>
+            </div>
+        {% else %}
+            {{ field }}
+        {% endif %}
+    {% endif %}
+    {% if field.help_text %}
+        <div class="form-field__help" id="{{ id }}_helptext">{{ field.help_text|safe }}</div>
+    {% endif %}
+    {% if field.errors %}
+        <ul class="form-field__errors" id="{{ id }}_error">
+            {% for error in field.errors %}<li>{{ error }}</li>{% endfor %}
+        </ul>
+    {% endif %}
+</div>
+{% endwith %}

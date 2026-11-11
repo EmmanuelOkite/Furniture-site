@@ -1,0 +1,11 @@
+{% extends "accounts/base.html" %}
+
+{% block page_title %}Check your email{% endblock %}
+
+{% block account_content %}
+<div class="auth-card">
+    <h1 class="auth-card__title">Check your email</h1>
+    <p>If a deactivated account uses that address, we’ve sent a link to reactivate it. The link works for 24 hours.</p>
+    <a href="{% url 'accounts:login' %}" class="button button--outline button--block">Back to sign in</a>
+</div>
+{% endblock %}

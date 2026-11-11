@@ -1,0 +1,24 @@
+{% extends "accounts/base.html" %}
+
+{% block page_title %}Sign in{% endblock %}
+
+{% block account_content %}
+<div class="auth-card">
+    <h1 class="auth-card__title">Sign in</h1>
+    <p class="auth-card__intro">Welcome back. Sign in with your email address.</p>
+    {% include "accounts/includes/form_errors.html" %}
+    <form method="post" class="account-form" data-account-form>
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+            {% include "accounts/includes/field.html" with field=form.email %}
+            {% include "accounts/includes/field.html" with field=form.password %}
+            {% include "accounts/includes/field.html" with field=form.remember_me %}
+        <button type="submit" class="button button--primary button--block" data-loading-text="Signing in…">Sign in</button>
+    </form>
+    <ul class="auth-card__links">
+        <li><a href="{% url 'accounts:password_reset' %}">Forgot your password?</a></li>
+        <li><a href="{% url 'accounts:register' %}">Create an account</a></li>
+        <li><a href="{% url 'accounts:reactivate_request' %}">Reactivate a deactivated account</a></li>
+    </ul>
+</div>
+{% endblock %}

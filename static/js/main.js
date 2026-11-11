@@ -90,3 +90,21 @@
     window.addEventListener("scroll", updateHeaderState, { passive: true });
     updateHeaderState();
 })();
+
+/*
+ * Notification messages (e.g. "You have been signed out"): dismiss button.
+ */
+(function () {
+    "use strict";
+
+    document.querySelectorAll("[data-message-dismiss]").forEach(function (button) {
+        button.addEventListener("click", function () {
+            var message = button.closest(".site-message");
+            var region = message.parentElement;
+            message.remove();
+            if (!region.children.length) {
+                region.remove();
+            }
+        });
+    });
+})();

@@ -1,0 +1,8 @@
+{% autoescape off %}Hello {{ user.first_name }},
+
+Use this link to reactivate your {{ site_name }} account:
+
+{{ link }}
+
+It works for {{ hours }} hours and can be used once. If you didn’t ask for this, ignore this email.
+{% endautoescape %}

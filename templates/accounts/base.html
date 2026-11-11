@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{% block page_title %}Your account{% endblock %} | Sam's Stunning Furniture{% endblock %}
+
+{% block extra_head %}
+    <meta name="robots" content="noindex">
+    <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="account-page">
+    <div class="container">
+        {% block account_content %}{% endblock %}
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+    <script src="{% static 'js/accounts.js' %}" defer></script>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "accounts/base.html" %}
+
+{% block page_title %}Set up two-factor authentication{% endblock %}
+
+{% block account_content %}
+{% include "accounts/includes/account_nav.html" with heading="Two-factor authentication" %}
+<div class="account-panel">
+    <h2 class="account-panel__title">Set up your authenticator app</h2>
+    <ol class="steps">
+        <li>Open an authenticator app on your phone.</li>
+        <li>Scan this QR code, or type in the setup key.</li>
+        <li>Enter the 6-digit code the app shows.</li>
+    </ol>
+    <div class="twofa-setup">
+        <img src="{{ qr_code }}" width="200" height="200" alt="QR code for your authenticator app. If you can’t scan it, type in the setup key shown next to it." class="twofa-setup__qr">
+        <div>
+            <p class="form-field__label">Setup key</p>
+            <p class="twofa-setup__key"><code>{{ secret }}</code></p>
+            <p class="account-panel__note">Keep this key private: anyone with it can create your codes.</p>
+        </div>
+    </div>
+    {% include "accounts/includes/form_errors.html" %}
+    <form method="post" class="account-form" data-account-form>
+        {% csrf_token %}
+            {% include "accounts/includes/field.html" with field=form.code %}
+        <button type="submit" class="button button--primary button--block" data-loading-text="Checking…">Turn on two-factor authentication</button>
+    </form>
+</div>
+{% endblock %}

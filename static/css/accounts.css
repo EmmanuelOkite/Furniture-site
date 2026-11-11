@@ -1,0 +1,542 @@
+/* ==========================================================================
+   Sam's Stunning Furniture: account pages
+   Builds on the tokens and buttons in main.css.
+   ========================================================================== */
+
+:root {
+    --danger: #9b2c2c;
+    --danger-soft: #fbeeee;
+    --ok: #2f6b45;
+    --ok-soft: #e8f2ea;
+    --warn: #8a5a12;
+    --warn-soft: #fbf1df;
+    --focus: #2f4a3a;
+}
+
+.account-page {
+    padding: clamp(40px, 7vw, 88px) 0 clamp(64px, 9vw, 112px);
+}
+
+/* Cards (sign in, register, reset…)
+   -------------------------------------------------------------------------- */
+
+.auth-card {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: clamp(28px, 5vw, 48px);
+    background: var(--ivory-soft);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+}
+
+.auth-card__title {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    line-height: 1.1;
+    margin-bottom: 12px;
+}
+
+.auth-card__intro {
+    color: var(--text-muted);
+    margin-bottom: 28px;
+}
+
+.auth-card > p + p,
+.auth-card > p + .button,
+.auth-card > p + .button-stack {
+    margin-top: 16px;
+}
+
+.auth-card__icon {
+    color: var(--forest);
+    margin-bottom: 16px;
+}
+
+.auth-card__icon svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+}
+
+.auth-card__note {
+    color: var(--text-muted);
+    font-size: .9375rem;
+}
+
+.auth-card__footer,
+.auth-card__links {
+    margin-top: 24px;
+    font-size: .9375rem;
+    text-align: center;
+}
+
+.auth-card__links {
+    display: grid;
+    gap: 6px;
+}
+
+.auth-card a:not(.button),
+.account-panel a:not(.button),
+.form-alert a {
+    color: var(--forest);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.button-stack {
+    display: grid;
+    gap: 12px;
+}
+
+/* Forms
+   -------------------------------------------------------------------------- */
+
+.account-form {
+    display: grid;
+    gap: 20px;
+}
+
+.form-field {
+    display: grid;
+    gap: 6px;
+}
+
+.form-field__label {
+    font-weight: 500;
+    font-size: .9375rem;
+}
+
+.form-field__optional {
+    font-weight: 400;
+    color: var(--text-muted);
+}
+
+.form-field input[type="text"],
+.form-field input[type="email"],
+.form-field input[type="password"],
+.form-field input[type="tel"] {
+    width: 100%;
+    min-height: 50px;
+    padding: 10px 14px;
+    background: #fff;
+    border: 1px solid #b9ad99;
+    border-radius: var(--radius);
+    font-size: 1rem;
+}
+
+.form-field input:focus-visible,
+.password-input__toggle:focus-visible,
+.account-page .button:focus-visible,
+.site-message__close:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+}
+
+.form-field--invalid input {
+    border-color: var(--danger);
+}
+
+.form-field--checkbox {
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-field--checkbox input {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--forest);
+}
+
+.form-field--checkbox .form-field__label {
+    font-weight: 400;
+}
+
+.form-field__help {
+    color: var(--text-muted);
+    font-size: .875rem;
+}
+
+.form-field__help ul {
+    padding-left: 18px;
+    list-style: disc;
+}
+
+.form-field__errors {
+    color: var(--danger);
+    font-size: .875rem;
+}
+
+.form-field__errors li::before {
+    content: "! ";
+    font-weight: 600;
+}
+
+.password-input {
+    position: relative;
+}
+
+.password-input input {
+    padding-right: 76px !important;
+}
+
+.password-input__toggle {
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    transform: translateY(-50%);
+    min-width: 60px;
+    min-height: 38px;
+    padding: 0 10px;
+    background: transparent;
+    border: 0;
+    border-radius: var(--radius);
+    color: var(--forest);
+    font-size: .8125rem;
+    font-weight: 500;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.strength {
+    display: grid;
+    gap: 4px;
+    font-size: .8125rem;
+    color: var(--text-muted);
+}
+
+.strength__bar {
+    height: 6px;
+    background: var(--beige);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.strength__fill {
+    height: 100%;
+    width: 0;
+    background: var(--danger);
+    transition: width var(--duration) var(--ease), background-color var(--duration) var(--ease);
+}
+
+.strength[data-score="2"] .strength__fill { background: var(--warn); }
+.strength[data-score="3"] .strength__fill { background: #5f7f3a; }
+.strength[data-score="4"] .strength__fill { background: var(--ok); }
+
+.form-alert {
+    padding: 14px 16px;
+    border-radius: var(--radius);
+    border-left: 4px solid;
+    margin-bottom: 20px;
+    font-size: .9375rem;
+}
+
+.form-alert--error {
+    background: var(--danger-soft);
+    border-color: var(--danger);
+    color: #6d1f1f;
+}
+
+.form-alert--success {
+    background: var(--ok-soft);
+    border-color: var(--ok);
+}
+
+/* Buttons
+   -------------------------------------------------------------------------- */
+
+.button--block {
+    width: 100%;
+}
+
+.button--danger {
+    background: var(--danger);
+    color: #fff;
+}
+
+.button--danger:hover {
+    background: #7d2020;
+}
+
+.button[aria-busy="true"] {
+    cursor: progress;
+    opacity: .8;
+}
+
+.button[aria-busy="true"]::before {
+    content: "";
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: account-spin .8s linear infinite;
+}
+
+@keyframes account-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Signed-in pages
+   -------------------------------------------------------------------------- */
+
+.account-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.account-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--line);
+    overflow-x: auto;
+}
+
+.account-tabs__link {
+    padding: 12px 18px;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    white-space: nowrap;
+    color: var(--text-muted);
+}
+
+.account-tabs__link:hover,
+.account-tabs__link[aria-current="page"] {
+    color: var(--charcoal);
+    border-bottom-color: var(--forest);
+}
+
+.account-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+}
+
+.account-stack {
+    display: grid;
+    gap: 24px;
+}
+
+.account-panel {
+    padding: clamp(22px, 4vw, 36px);
+    background: var(--ivory-soft);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    max-width: 100%;
+}
+
+.account-page > .container > .account-panel {
+    max-width: 640px;
+}
+
+.account-panel--muted {
+    background: var(--sand);
+}
+
+.account-panel--danger {
+    border-color: #d9b3b3;
+}
+
+.account-panel__title {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+}
+
+.account-panel__intro {
+    color: var(--text-muted);
+    margin-bottom: 20px;
+}
+
+.account-panel > p + .button,
+.account-panel > p + .button-group,
+.account-panel > .button-group,
+.account-panel > form {
+    margin-top: 16px;
+}
+
+.account-panel__note {
+    margin-top: 16px;
+    color: var(--text-muted);
+    font-size: .9375rem;
+}
+
+.info-list {
+    display: grid;
+    gap: 14px;
+    margin: 0;
+}
+
+.info-list dt {
+    font-size: .8125rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.info-list dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: .8125rem;
+    font-weight: 500;
+}
+
+.badge--ok { background: var(--ok-soft); color: var(--ok); }
+.badge--warn { background: var(--warn-soft); color: var(--warn); }
+
+.session-list {
+    display: grid;
+    gap: 2px;
+    margin-bottom: 16px;
+}
+
+.session-list__item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.session-list__device {
+    overflow-wrap: anywhere;
+}
+
+.session-list__meta {
+    color: var(--text-muted);
+    font-size: .875rem;
+}
+
+.table-scroll {
+    overflow-x: auto;
+}
+
+.activity-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .9375rem;
+}
+
+.activity-table th,
+.activity-table td {
+    padding: 10px 12px 10px 0;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    white-space: nowrap;
+}
+
+.activity-table th {
+    font-weight: 500;
+    font-size: .8125rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.activity-table__row--alert td:first-child {
+    color: var(--danger);
+}
+
+.steps {
+    padding-left: 20px;
+    margin: 0 0 20px;
+}
+
+.twofa-setup {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.twofa-setup__qr {
+    background: #fff;
+    border: 1px solid var(--line);
+}
+
+.twofa-setup__key code,
+.backup-codes code {
+    font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+    font-size: 1rem;
+    letter-spacing: .08em;
+    overflow-wrap: anywhere;
+}
+
+.backup-codes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin: 20px 0 24px;
+    padding: 20px;
+    background: #fff;
+    border: 1px dashed #b9ad99;
+    border-radius: var(--radius);
+}
+
+.error-page p + p {
+    margin-top: 16px;
+}
+
+/* Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 860px) {
+    .account-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 560px) {
+    .account-page .container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .auth-card,
+    .account-panel {
+        padding: 22px 18px;
+    }
+
+    .backup-codes {
+        grid-template-columns: 1fr;
+    }
+
+    .account-header__signout {
+        width: 100%;
+    }
+}
+
+@media print {
+    .site-header,
+    .site-footer,
+    .account-tabs,
+    .account-header__signout,
+    .button-group {
+        display: none !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .button[aria-busy="true"]::before {
+        animation: none;
+    }
+}

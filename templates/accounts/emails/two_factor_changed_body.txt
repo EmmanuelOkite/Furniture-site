@@ -1,0 +1,6 @@
+{% autoescape off %}Hello {{ user.first_name }},
+
+Two-factor authentication was {% if enabled %}turned on{% else %}turned off{% endif %} for your {{ site_name }} account.
+
+If you didn’t do this, reset your password at {{ site_url }}accounts/password/reset/ and contact us.
+{% endautoescape %}

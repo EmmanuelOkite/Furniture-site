@@ -15,12 +15,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 
+from accounts.views import admin_login_redirect
 from furnitureapp import views
 
 urlpatterns = [
+    # The admin signs in through the account sign-in (rate limits, lockout, 2FA).
+    path('admin/login/', admin_login_redirect),
     path('admin/', admin.site.urls),
+    path('accounts/', include('accounts.urls')),
     path('', views.home, name='home'),
     path('collection/', views.collection, name='collection'),
     path('living-room/', views.room_page, {'room': 'living-room'}, name='living_room'),

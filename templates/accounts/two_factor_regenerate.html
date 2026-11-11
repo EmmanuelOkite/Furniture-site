@@ -1,0 +1,17 @@
+{% extends "accounts/base.html" %}
+
+{% block page_title %}New backup codes{% endblock %}
+
+{% block account_content %}
+{% include "accounts/includes/account_nav.html" with heading="Two-factor authentication" %}
+<div class="account-panel">
+    <h2 class="account-panel__title">Create new backup codes</h2>
+    <p class="account-panel__intro">Your old backup codes will stop working.</p>
+    {% include "accounts/includes/form_errors.html" %}
+    <form method="post" class="account-form" data-account-form>
+        {% csrf_token %}
+            {% include "accounts/includes/field.html" with field=form.password %}
+        <button type="submit" class="button button--primary button--block" data-loading-text="Creating…">Create new codes</button>
+    </form>
+</div>
+{% endblock %}

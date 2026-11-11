@@ -1,0 +1,12 @@
+{% if messages %}
+<div class="site-messages" role="status" aria-live="polite" data-messages>
+    {% for message in messages %}
+    <div class="site-message site-message--{{ message.level_tag|default:'info' }}">
+        <p>{{ message }}</p>
+        <button type="button" class="site-message__close" aria-label="Dismiss message" data-message-dismiss>
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg>
+        </button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}

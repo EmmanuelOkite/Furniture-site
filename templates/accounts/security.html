@@ -1,0 +1,80 @@
+{% extends "accounts/base.html" %}
+
+{% block page_title %}Security{% endblock %}
+
+{% block account_content %}
+{% include "accounts/includes/account_nav.html" with heading="Security" %}
+<div class="account-stack">
+    <section class="account-panel" aria-labelledby="twofa-heading">
+        <h2 class="account-panel__title" id="twofa-heading">Two-factor authentication</h2>
+        {% if two_factor_enabled %}
+        <p><span class="badge badge--ok">On</span> Signing in needs a code from your authenticator app. {{ backup_codes_left }} backup code{{ backup_codes_left|pluralize }} left.</p>
+        <div class="button-group">
+            <a href="{% url 'accounts:two_factor_backup_codes' %}" class="button button--outline button--small">New backup codes</a>
+            <a href="{% url 'accounts:two_factor_disable' %}" class="button button--outline button--small">Turn off</a>
+        </div>
+        {% else %}
+        <p><span class="badge badge--warn">Off</span> Add a second step to sign-in with an authenticator app such as Google Authenticator, Microsoft Authenticator or 1Password.</p>
+        <a href="{% url 'accounts:two_factor_setup' %}" class="button button--primary button--small">Set up two-factor authentication</a>
+        {% endif %}
+    </section>
+
+    <section class="account-panel" aria-labelledby="sessions-heading">
+        <h2 class="account-panel__title" id="sessions-heading">Where you’re signed in</h2>
+        <ul class="session-list">
+            {% for s in sessions %}
+            <li class="session-list__item">
+                <div>
+                    <p class="session-list__device">{{ s.user_agent|default:"Unknown device"|truncatechars:80 }}</p>
+                    <p class="session-list__meta">{{ s.ip_address|default:"Unknown IP" }} · signed in {{ s.created_at|date:"j M Y, H:i" }}{% if s.session_key == current_session_key %} · <strong>This device</strong>{% endif %}</p>
+                </div>
+                {% if s.session_key != current_session_key %}
+                <form method="post" action="{% url 'accounts:revoke_session' s.pk %}" data-account-form>
+                    {% csrf_token %}
+                    <button type="submit" class="button button--outline button--small" data-loading-text="Signing out…">Sign out</button>
+                </form>
+                {% endif %}
+            </li>
+            {% empty %}
+            <li class="session-list__item">No active sessions recorded.</li>
+            {% endfor %}
+        </ul>
+        {% if sessions|length > 1 %}
+        <form method="post" action="{% url 'accounts:revoke_other_sessions' %}" data-account-form>
+            {% csrf_token %}
+            <button type="submit" class="button button--outline button--small" data-loading-text="Signing out…">Sign out all other sessions</button>
+        </form>
+        {% endif %}
+    </section>
+
+    <section class="account-panel" aria-labelledby="activity-heading">
+        <h2 class="account-panel__title" id="activity-heading">Recent activity</h2>
+        <div class="table-scroll">
+            <table class="activity-table">
+                <thead><tr><th scope="col">Event</th><th scope="col">When</th><th scope="col">IP address</th></tr></thead>
+                <tbody>
+                {% for event in events %}
+                    <tr{% if event.event_type == "login_failed" or event.event_type == "login_new_location" or event.event_type == "2fa_failed" %} class="activity-table__row--alert"{% endif %}>
+                        <td>{{ event.get_event_type_display }}</td>
+                        <td>{{ event.created_at|date:"j M Y, H:i" }}</td>
+                        <td>{{ event.ip_address|default:"—" }}</td>
+                    </tr>
+                {% empty %}
+                    <tr><td colspan="3">No activity yet.</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <p class="account-panel__note">See something you don’t recognise? <a href="{% url 'accounts:password_change' %}">Change your password</a> and sign out other sessions.</p>
+    </section>
+
+    <section class="account-panel account-panel--danger" aria-labelledby="danger-heading">
+        <h2 class="account-panel__title" id="danger-heading">Deactivate or delete</h2>
+        <p>Deactivating hides your account until you reactivate it by email. Deleting removes your account and personal data permanently.</p>
+        <div class="button-group">
+            <a href="{% url 'accounts:deactivate' %}" class="button button--outline button--small">Deactivate account</a>
+            {% if not user.is_superuser %}<a href="{% url 'accounts:delete_account' %}" class="button button--danger button--small">Delete account</a>{% endif %}
+        </div>
+    </section>
+</div>
+{% endblock %}

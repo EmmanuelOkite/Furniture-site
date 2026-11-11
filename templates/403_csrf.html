@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Form expired | Sam's Stunning Furniture{% endblock %}
+
+{% block content %}
+<section class="section error-page">
+    <div class="container">
+        <p class="eyebrow">Security check failed</p>
+        <h1 class="section-title">This form has expired</h1>
+        <p>For your security, forms only work for a limited time and need cookies enabled. Please go back, reload the page and try again.</p>
+        <p><a href="{% url 'home' %}" class="button button--primary">Back to the shop</a></p>
+    </div>
+</section>
+{% endblock %}

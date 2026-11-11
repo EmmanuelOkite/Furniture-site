@@ -8,7 +8,7 @@
     <meta name="theme-color" content="#F7F3EC">
     <link rel="icon" href="{% static 'images/favicon.svg' %}" type="image/svg+xml">
 
-    <script>document.documentElement.classList.replace("no-js", "js");</script>
+    <script nonce="{{ csp_nonce }}">document.documentElement.classList.replace("no-js", "js");</script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,11 +23,13 @@
     {% include "includes/navbar.html" %}
 
     <main id="main-content">
+        {% include "includes/messages.html" %}
         {% block content %}{% endblock %}
     </main>
 
     {% include "includes/footer.html" %}
 
     <script src="{% static 'js/main.js' %}" defer></script>
+    {% block extra_scripts %}{% endblock %}
 </body>
 </html>

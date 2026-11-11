@@ -14,7 +14,7 @@
                 <li><a href="{% url 'home' %}#categories" class="main-nav__link">Categories</a></li>
                 <li><a href="#" class="main-nav__link">About Us</a></li>
                 <li><a href="#" class="main-nav__link">Contact</a></li>
-                <li class="main-nav__item--mobile"><a href="#" class="main-nav__link">My Account</a></li>
+                <li class="main-nav__item--mobile"><a href="{% if user.is_authenticated %}{% url 'accounts:profile' %}{% else %}{% url 'accounts:login' %}{% endif %}" class="main-nav__link">{% if user.is_authenticated %}My Account{% else %}Sign In{% endif %}</a></li>
             </ul>
         </nav>
 
@@ -22,7 +22,7 @@
             <button type="button" class="icon-button" aria-label="Search" aria-expanded="false" aria-controls="site-search" data-search-toggle>
                 <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
             </button>
-            <a href="#" class="icon-button" aria-label="My account">
+            <a href="{% if user.is_authenticated %}{% url 'accounts:profile' %}{% else %}{% url 'accounts:login' %}{% endif %}" class="icon-button" aria-label="{% if user.is_authenticated %}My account{% else %}Sign in{% endif %}"{% if current == 'profile' %} aria-current="page"{% endif %}>
                 <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5"/></svg>
             </a>
             <button type="button" class="icon-button menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav" data-menu-toggle>

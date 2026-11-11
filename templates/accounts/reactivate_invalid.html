@@ -1,0 +1,11 @@
+{% extends "accounts/base.html" %}
+
+{% block page_title %}{% if expired %}This link has expired{% else %}This link isn’t valid{% endif %}{% endblock %}
+
+{% block account_content %}
+<div class="auth-card">
+    <h1 class="auth-card__title">{% if expired %}This link has expired{% else %}This link isn’t valid{% endif %}</h1>
+    <p>Reactivation links work once, for 24 hours.</p>
+    <a href="{% url 'accounts:reactivate_request' %}" class="button button--primary button--block">Request a new link</a>
+</div>
+{% endblock %}

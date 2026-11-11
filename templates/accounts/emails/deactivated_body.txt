@@ -1,0 +1,8 @@
+{% autoescape off %}Hello {{ user.first_name }},
+
+Your {{ site_name }} account has been deactivated and all sessions were signed out.
+
+To use it again, request a reactivation link at {{ site_url }}accounts/reactivate/
+
+If you didn’t do this, request a reactivation link and then reset your password.
+{% endautoescape %}

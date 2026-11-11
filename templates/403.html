@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Access denied | Sam's Stunning Furniture{% endblock %}
+
+{% block content %}
+<section class="section error-page">
+    <div class="container">
+        <p class="eyebrow">Error 403</p>
+        <h1 class="section-title">You don’t have access to this page</h1>
+        <p>If you think you should, please sign in with an account that has permission, or contact us.</p>
+        <p><a href="{% url 'home' %}" class="button button--primary">Back to the shop</a></p>
+    </div>
+</section>
+{% endblock %}
